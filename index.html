@@ -258,6 +258,7 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--ink);outline-off
         <div><label for="f-company">اسم الشركة</label><input id="f-company" name="company" maxlength="160" autocomplete="organization"></div>
         <div><label for="f-phone">موبايل (واتساب)</label><input id="f-phone" name="phone" required inputmode="tel" placeholder="01xxxxxxxxx" minlength="8" maxlength="20" autocomplete="tel"></div>
       </div>
+      <label for="f-email">الإيميل</label><input id="f-email" name="email" type="email" required maxlength="160" autocomplete="email" placeholder="name@company.com">
       <div class="two">
         <div><label for="f-activity">النشاط</label><select id="f-activity" name="activity"><option value="">اختار…</option><option>تجارة / توريدات</option><option>مطعم / كافيه</option><option>عيادة / مركز</option><option>وكالة / خدمات</option><option>مقاولات</option><option>أونلاين / إي-كومرس</option><option>تاني</option></select></div>
         <div><label for="f-docs">عدد الفواتير في الشهر تقريباً</label><select id="f-docs" name="docs_per_month"><option value="">اختار…</option><option>أقل من 50</option><option>50 – 150</option><option>أكتر من 150</option><option>مش عارف</option></select></div>
@@ -289,7 +290,7 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--ink);outline-off
   form.addEventListener('submit',function(e){
     e.preventDefault(); err.style.display='none'; send.disabled=true; send.textContent='ثواني…';
     var fd=new FormData(form), p=new URLSearchParams(location.search);
-    var body={name:fd.get('name').trim(),company:(fd.get('company')||'').trim()||null,phone:fd.get('phone').trim(),activity:fd.get('activity')||null,docs_per_month:fd.get('docs_per_month')||null,software:fd.get('software')||null,note:((plan?'الباقة: '+plan+'. ':'')+(fd.get('note')||'')).trim()||null,source:'website',utm:{src:p.get('utm_source'),camp:p.get('utm_campaign'),med:p.get('utm_medium'),ref:document.referrer||null}};
+    var body={name:fd.get('name').trim(),company:(fd.get('company')||'').trim()||null,phone:fd.get('phone').trim(),email:(fd.get('email')||'').trim().toLowerCase()||null,activity:fd.get('activity')||null,docs_per_month:fd.get('docs_per_month')||null,software:fd.get('software')||null,note:((plan?'الباقة: '+plan+'. ':'')+(fd.get('note')||'')).trim()||null,source:'website',utm:{src:p.get('utm_source'),camp:p.get('utm_campaign'),med:p.get('utm_medium'),ref:document.referrer||null}};
     fetch(SUPA+'/rest/v1/bk_leads',{method:'POST',headers:{'Content-Type':'application/json','apikey':KEY,'Authorization':'Bearer '+KEY,'Prefer':'return=minimal'},body:JSON.stringify(body)})
     .then(function(r){if(!r.ok)throw new Error(r.status);form.style.display='none';ok.style.display='';form.reset();})
     .catch(function(){err.style.display='block';})
