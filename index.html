@@ -16,6 +16,7 @@
 :root{--ink:#10203A;--ink2:#1A2C4B;--red:#C8392B;--red2:#A32C21;--paper:#FBF8F1;--line:#E8E1D2;--muted:#4A5568;--muted2:#718096;--gold:#D9B45B;--bg:#FFFFFF}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
+html,body{overflow-x:hidden}
 body{margin:0;font-family:'Readex Pro',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
 a{color:inherit}
 .wrap{max-width:1200px;margin:0 auto;padding:0 20px}
@@ -113,7 +114,16 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--ink);outline-off
 .ok .big{font-size:56px}
 .err{color:var(--red);font-size:13px;margin-top:8px;display:none}
 @media (max-width:900px){
-  .hero{grid-template-columns:1fr;padding:40px 24px}
+  .hero{grid-template-columns:1fr;padding:36px 20px;margin-top:4px}
+  .hero>div{min-width:0;max-width:100%}
+  .lead{font-size:16px}
+  .trust{font-size:13px;gap:8px}
+  header{padding:12px 0}
+  .logo{font-size:20px}.logo svg{width:34px;height:34px}
+  .btn{padding:11px 16px}
+  .card{padding:16px}
+  .kpis{gap:8px}.kpi{padding:10px}.kpi b{font-size:18px}
+  .dark h2,h2{font-size:26px}
   .grid3,.plans{grid-template-columns:1fr}
   .faq{grid-template-columns:1fr;padding:40px 24px}
   .dark{padding:44px 24px}
