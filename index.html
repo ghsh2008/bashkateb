@@ -68,6 +68,18 @@ h2{margin:8px 0 10px;font-size:clamp(28px,3.4vw,38px);line-height:1.25;font-weig
 .step .ic.red{background:var(--accent)}
 .step h3{margin:0 0 8px;font-size:20px}
 .step p{margin:0;color:var(--muted);font-size:15px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:28px}
+.who{background:var(--paper);border-radius:22px;padding:30px;display:flex;flex-direction:column;gap:14px;align-items:flex-start}
+.who h3{margin:0;font-size:24px;line-height:1.3}
+.who-tag{font-size:13px;font-weight:600;color:var(--accent)}
+.who ul,.rl{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:9px;font-size:15px;color:var(--muted)}
+.who li,.rl li{display:flex;gap:10px}.who li::before,.rl li::before{content:"✓";color:var(--accent);font-weight:700}
+.who .btn{margin-top:auto}
+.who-dark{background:var(--ink);color:#fff}.who-dark ul{color:#B8C2D6}.who-dark .who-tag,.who-dark li::before{color:#7FE3EB}
+.tl{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:28px}
+.tl-i{border-top:3px solid var(--red);padding-top:14px}
+.tl-i b{font-size:16px}.tl-i p{margin:6px 0 0;font-size:14px;color:var(--muted)}
+.role-me{background:var(--ink);color:#fff}.role-me .rl{color:#B8C2D6}.role-me .rl li::before{color:#7FE3EB}
 .dark{background:var(--ink);color:#fff;border-radius:28px;padding:64px 48px}
 .dark .eyebrow{color:#7FE3EB}
 .tbl{overflow-x:auto;margin-top:28px}
@@ -126,7 +138,10 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--ink);outline-off
   .card{padding:16px}
   .kpis{gap:8px}.kpi{padding:10px}.kpi b{font-size:18px}
   .dark h2,h2{font-size:26px}
-  .grid3,.plans{grid-template-columns:1fr}
+  .grid3,.plans,.grid2{grid-template-columns:1fr}
+  .tl{grid-template-columns:1fr;gap:0}
+  .tl-i{border-top:0;border-inline-start:3px solid var(--red);padding:0 14px 18px 0}
+  .who{padding:24px}.who h3{font-size:21px}
   .faq{grid-template-columns:1fr;padding:40px 24px}
   .dark{padding:44px 24px}
   nav{display:none}
@@ -143,7 +158,7 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--ink);outline-off
       باشكاتب
     </a>
     <nav>
-      <a href="#how">إزاي بيشتغل</a><a href="#why">ليه باشكاتب</a><a href="#pricing">الأسعار</a><a href="#faq">أسئلة</a>
+      <a href="#how">إزاي بيشتغل</a><a href="#accountants">للمحاسبين</a><a href="#why">ليه باشكاتب</a><a href="#pricing">الأسعار</a><a href="#faq">أسئلة</a>
     </nav>
     <div style="display:flex;gap:8px;align-items:center">
       <a class="btn btn-ghost" href="https://ghsh2008.github.io/Live-Artifacts/">دخول العملاء</a>
@@ -153,8 +168,8 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--ink);outline-off
 
   <section class="hero" id="top">
     <div>
-      <span class="pill"><i></i>مسك دفاتر للشركات الصغيرة</span>
-      <h1>أول خدمة مسك دفاتر في مصر<span>تجمع نظام ذكي وفريق محاسبين، وتستقبل مستنداتك من الواتساب.</span></h1>
+      <span class="pill"><i></i>مسك دفاتر للشركات والمحاسبين</span>
+      <h1>صاحب شركة؟ محاسب؟<br>سهّلناها عليك.<span>أول خدمة مسك دفاتر في مصر تجمع نظام ذكي وفريق محاسبين، وتستقبل مستنداتك من الواتساب.</span></h1>
       <p class="lead">صوّر الفاتورة وابعتها. إحنا نسجّلها، نصنّف البنك، وآخر الشهر تلاقي تقرير واضح: بعت كام، صرفت كام، ومين مديون لك. نظام بيشتغل كل يوم، وفريق محاسبين بيراجع كل حاجة.</p>
       <div class="cta-row">
         <button class="btn btn-ink" data-open style="padding:15px 28px;font-size:17px">ابدأ تجربة 14 يوم</button>
@@ -185,6 +200,25 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--ink);outline-off
 
   <div class="logos">بنشتغل على البرنامج اللي عندك أو اللي تختاره<div><span>Wafeq</span><span>Zoho Books</span><span>QuickBooks</span><span>Qoyod</span><span>Daftra</span><span>Xero</span></div></div>
 
+  <section class="block" id="who" style="padding-bottom:0">
+    <span class="eyebrow">باشكاتب لمين</span>
+    <h2>سهّلناها عليك، سواء الدفاتر بتاعتك أو بتاعة عملاءك.</h2>
+    <div class="grid2">
+      <div class="who">
+        <span class="who-tag">لو إنت صاحب شركة</span>
+        <h3>ابعت الفاتورة وانسى.</h3>
+        <ul><li>تصوّر وتبعت على الواتساب، وده كل شغلك</li><li>دفاترك بتتسجّل كل يوم على برنامجك</li><li>تقرير شهري بالعربي، مراجَع من محاسبين</li></ul>
+        <button class="btn btn-ink" data-open>ابدأ تجربة 14 يوم</button>
+      </div>
+      <div class="who who-dark" id="accountants">
+        <span class="who-tag">لو إنت محاسب أو مكتب محاسبة</span>
+        <h3>امسك شركات أكتر بنفس الوقت.</h3>
+        <ul><li>عملاءك يبعتوا مستنداتهم على الواتساب بدل ما تجري وراهم</li><li>النظام يسجّل ويطابق البنك، وإنت تراجع وتعتمد</li><li>كل شركاتك في شاشة واحدة، وكل سؤال للعميل متسجّل</li></ul>
+        <button class="btn btn-red" data-open data-plan="محاسب / مكتب محاسبة" data-title="سجّل كمحاسب أو مكتب محاسبة" data-sub="سيب بياناتك وهنكلّمك على واتساب نعرف شغلك ماشي إزاي وعدد شركاتك.">سجّل اهتمامك</button>
+      </div>
+    </div>
+  </section>
+
   <section class="block" id="how">
     <span class="eyebrow">إزاي بيشتغل</span>
     <h2>تلات خطوات. إنت عندك واحدة بس.</h2>
@@ -192,6 +226,29 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--ink);outline-off
       <div class="step"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3.5"/><path d="M8 5l1.5-2h5L16 5"/></svg></div><h3>١. صوّر وابعت</h3><p>الفاتورة أو الإيصال على واتساب الشركة أو فولدر الدرايف. كشف البنك مرة في الشهر. ده كل شغلك.</p></div>
       <div class="step"><div class="ic red"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 17l.8 2.2L22 20l-2.2.8L19 23l-.8-2.2L16 20l2.2-.8z"/></svg></div><h3>٢. باشكاتب يسجّل ويرتّب</h3><p>النظام يقرأ المستند، يسجّله على برنامجك، ويطابقه مع البنك في نفس اليوم. أي حاجة مش واضحة توصلك سؤال واحد قصير — وإجابتك تتحفظ وما تتسألش تاني.</p></div>
       <div class="step"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div><h3>٣. تقرير مراجَع آخر الشهر</h3><p>فريق المحاسبين بيراجع الشهر كله قبل ما يوصلك. تقرير بالعربي مفهوم + دفاترك جاهزة لمحاسبك الضريبي.</p></div>
+    </div>
+  </section>
+
+  <section class="block" id="month" style="padding-top:0">
+    <span class="eyebrow">شهر مع باشكاتب</span>
+    <h2>الشهر بيمشي كده.</h2>
+    <div class="tl">
+      <div class="tl-i"><b>أول يوم</b><p>نربط برنامجك، ونديك رقم واتساب خاص بشركتك.</p></div>
+      <div class="tl-i"><b>كل يوم</b><p>تبعت الفواتير أول ما تيجي. النظام يسجّلها ويطابقها في نفس اليوم.</p></div>
+      <div class="tl-i"><b>لما حاجة مش واضحة</b><p>سؤال واحد قصير على الواتساب، وإجابتك تتحفظ للمرات الجاية.</p></div>
+      <div class="tl-i"><b>أول الشهر</b><p>تبعت كشف البنك مرة واحدة، ونصنّف كل حركة فيه.</p></div>
+      <div class="tl-i"><b>آخر الشهر</b><p>المحاسبين يراجعوا الشهر كله، ويوصلك تقرير بالعربي.</p></div>
+    </div>
+    <p class="note">قريباً: تنبيه قبل انتهاء السجل التجاري والبطاقة الضريبية بـ 30 يوم.</p>
+  </section>
+
+  <section class="block" id="roles" style="padding-top:0">
+    <span class="eyebrow">مين بيعمل إيه</span>
+    <h2>كل واحد عارف دوره من أول يوم.</h2>
+    <div class="grid3">
+      <div class="step"><h3>إنت</h3><ul class="rl"><li>تصوّر المستندات وتبعتها</li><li>تبعت كشف البنك مرة في الشهر</li><li>ترد على السؤال لما ييجي</li></ul></div>
+      <div class="step role-me"><h3>باشكاتب</h3><ul class="rl"><li>نسجّل الفواتير والمصاريف</li><li>نصنّف ونطابق البنك</li><li>نراجع الشهر ونطلّع التقرير</li><li>نسلّم الدفاتر جاهزة للضرايب</li></ul></div>
+      <div class="step"><h3>محاسبك الضريبي</h3><ul class="rl"><li>يستلم الدفاتر مرتبة</li><li>يجهّز ويقدّم الإقرارات</li><li>الإقرارات مش ضمن خدمتنا</li></ul></div>
     </div>
   </section>
 
@@ -213,7 +270,7 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--ink);outline-off
   <section class="block" id="pricing">
     <span class="eyebrow">الأسعار</span>
     <h2>أسعار واضحة بالجنيه. من غير مفاجآت.</h2>
-    <p class="sub">السعر حسب عدد المستندات في الشهر. اشتراك البرنامج نفسه (لو مش عندك) بيتدفع لصاحب البرنامج مباشرة — دفاترك ملكك دايماً. للمقارنة: محاسب موظف بيكلّف 7,000 – 9,500 ج شهرياً بالتأمينات، وبارت تايم 3,000 – 4,000 ج.</p>
+    <p class="sub">السعر حسب عدد المستندات في الشهر، وبنأكّد لك الباقة والسعر كتابةً قبل ما نبدأ.اشتراك البرنامج نفسه (لو مش عندك) بيتدفع لصاحب البرنامج مباشرة — دفاترك ملكك دايماً. للمقارنة: محاسب موظف بيكلّف 7,000 – 9,500 ج شهرياً بالتأمينات، وبارت تايم 3,000 – 4,000 ج.</p>
     <div class="plans">
       <div class="plan"><span class="name">بداية</span><div class="price"><b>2,500</b><span>ج / شهر</span></div><span class="cap">لحد 50 مستند في الشهر</span>
         <ul><li>تسجيل الفواتير والمصاريف</li><li>تصنيف ومطابقة البنك</li><li>تقرير شهري بالعربي</li><li>رقم واتساب خاص بشركتك</li></ul>
@@ -254,7 +311,7 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--ink);outline-off
     <button class="close" data-close aria-label="إغلاق">✕</button>
     <form id="lead">
       <h3 id="mtitle">ابدأ تجربة 14 يوم</h3>
-      <p>دقيقة واحدة. هنكلّمك على واتساب في نفس اليوم.</p>
+      <p id="msub">دقيقة واحدة. هنكلّمك على واتساب في نفس اليوم.</p>
       <label for="f-name">اسمك</label><input id="f-name" name="name" required minlength="2" maxlength="120" autocomplete="name">
       <div class="two">
         <div><label for="f-company">اسم الشركة</label><input id="f-company" name="company" maxlength="160" autocomplete="organization"></div>
@@ -285,7 +342,7 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--ink);outline-off
   var SUPA='https://vuqydfqlfnzfwsosbrmo.supabase.co', KEY='sb_publishable_s2UGFZt4qRq1Jgvs86RYFA_N5nxYmz8';
   var modal=document.getElementById('modal'), form=document.getElementById('lead'), ok=document.getElementById('ok'), err=document.getElementById('err'), send=document.getElementById('send');
   var plan='';
-  document.querySelectorAll('[data-open]').forEach(function(b){b.addEventListener('click',function(e){e.preventDefault();plan=b.getAttribute('data-plan')||'';modal.classList.add('open');form.style.display='';ok.style.display='none';setTimeout(function(){document.getElementById('f-name').focus();},50);});});
+  document.querySelectorAll('[data-open]').forEach(function(b){b.addEventListener('click',function(e){e.preventDefault();plan=b.getAttribute('data-plan')||'';document.getElementById('mtitle').textContent=b.getAttribute('data-title')||'ابدأ تجربة 14 يوم';document.getElementById('msub').textContent=b.getAttribute('data-sub')||'دقيقة واحدة. هنكلّمك على واتساب في نفس اليوم.';modal.classList.add('open');form.style.display='';ok.style.display='none';setTimeout(function(){document.getElementById('f-name').focus();},50);});});
   document.querySelectorAll('[data-close]').forEach(function(b){b.addEventListener('click',function(){modal.classList.remove('open');});});
   modal.addEventListener('click',function(e){if(e.target===modal)modal.classList.remove('open');});
   document.addEventListener('keydown',function(e){if(e.key==='Escape')modal.classList.remove('open');});
