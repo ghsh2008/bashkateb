@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>تعيين كلمة السر — الباشكاتب</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='12' fill='%2310203A'/%3E%3Cpath d='M14 23 L16.5 10 L31.5 10 L34 23 Z' fill='%23C8392B'/%3E%3Crect x='12.5' y='22' width='23' height='3.5' rx='1.75' fill='%23A32C21'/%3E%3Cpath d='M24 28 L29 33.5 L24 42 L19 33.5 Z' fill='%23FBF8F1'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;500;700&display=swap">
+<style>
+:root{--ink:#10203A;--red:#C8392B;--paper:#FBF8F1;--line:#E8E1D2;--muted:#4A5568}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--paper);font-family:'Readex Pro',system-ui,sans-serif;color:var(--ink);padding:16px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:32px 26px;max-width:440px;width:100%;text-align:center;box-shadow:0 10px 30px rgba(16,32,58,.06)}
+.logo{display:flex;align-items:center;justify-content:center;gap:10px;font-weight:700;font-size:20px;margin-bottom:18px}
+.logo svg{width:36px;height:36px}
+h1{font-size:22px;margin:0 0 10px}
+p{color:var(--muted);line-height:1.8;margin:0 0 22px;font-size:15px}
+button{background:var(--ink);color:#fff;border:0;border-radius:12px;padding:14px 28px;font:inherit;font-size:16px;font-weight:600;cursor:pointer;width:100%}
+button:disabled{opacity:.6;cursor:default}
+.err{color:var(--red);font-size:14px;margin-top:14px;min-height:20px}
+small{display:block;color:#718096;margin-top:16px;font-size:12px}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="logo"><svg viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#10203A"/><path d="M14 23 L16.5 10 L31.5 10 L34 23 Z" fill="#C8392B"/><rect x="12.5" y="22" width="23" height="3.5" rx="1.75" fill="#A32C21"/><path d="M24 28 L29 33.5 L24 42 L19 33.5 Z" fill="#FBF8F1"/></svg>الباشكاتب</div>
+  <h1>تعيين كلمة السر</h1>
+  <p>اضغط الزرار مرة واحدة، هتفتح معاك صفحة تكتب فيها كلمة سر جديدة لبورتال العملاء.</p>
+  <button id="b">ادخل وعيّن كلمة السر</button>
+  <div class="err" id="e"></div>
+  <small>اللينك ده بيشتغل مرة واحدة وصالح لمدة ساعة.</small>
+</div>
+<script>
+(function(){
+  var id = new URLSearchParams(location.search).get('id') || '';
+  var b = document.getElementById('b'), e = document.getElementById('e');
+  if (!/^[a-f0-9]{24,64}$/.test(id)) { b.disabled = true; e.textContent = 'اللينك مش كامل. اطلب لينك جديد من فريق الخدمة.'; return; }
+  b.onclick = function(){
+    b.disabled = true; b.textContent = 'جاري الفتح…';
+    fetch('https://vuqydfqlfnzfwsosbrmo.supabase.co/functions/v1/portal/go/' + id, { method: 'POST' })
+      .then(function(r){ return r.json(); })
+      .then(function(j){ if (j.link) { location.href = j.link; } else { b.textContent = 'ادخل وعيّن كلمة السر'; e.textContent = 'اللينك انتهى أو اتستخدم قبل كده. اطلب لينك جديد من فريق الخدمة.'; } })
+      .catch(function(){ b.disabled = false; b.textContent = 'ادخل وعيّن كلمة السر'; e.textContent = 'حصلت مشكلة في الاتصال، جرّب تاني.'; });
+  };
+})();
+</script>
+</body>
+</html>
