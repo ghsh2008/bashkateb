@@ -180,23 +180,7 @@ a{color:inherit}
 .plan.hot ul{border-color:rgba(255,255,255,.15);color:#C9D7EE}
 .plan li::before{content:"✓  ";color:var(--tq);font-weight:700}
 .plan .btn{margin-top:auto;width:100%}
-.price-note{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:26px}
-.feat{display:grid;grid-template-columns:1.1fr 1fr;gap:24px;margin-bottom:56px}
-.fc{border-radius:32px;padding:clamp(28px,3.2vw,44px);display:flex;flex-direction:column;gap:14px;position:relative;overflow:hidden}
-.fc.dark{background:linear-gradient(160deg,var(--navy2),var(--deep));color:#fff}
-.fc.light{background:var(--ice)}
-.fc .tag{font-size:15px;font-weight:600;color:var(--tq2)}
-.fc.dark .tag{color:var(--tq)}
-.fc h3{font-size:clamp(26px,2.5vw,36px)}
-.fc p{margin:0;font-size:17px;line-height:1.75;color:var(--muted)}
-.fc.dark p{color:#C9D7EE}
-.fchat{display:flex;flex-direction:column;gap:10px;margin-top:10px;background:rgba(255,255,255,.05);border-radius:22px;padding:18px}
-.fchat .q{align-self:flex-start;background:#22365F;color:#fff;border-radius:16px 16px 16px 4px;padding:10px 14px;font-size:15px}
-.fchat .a{align-self:flex-end;background:var(--tq);color:var(--navy);border-radius:16px 16px 4px 16px;padding:10px 14px;font-size:15px;font-weight:600;max-width:78%;line-height:1.6}
-.frows{margin-top:10px;background:#fff;border-radius:22px;padding:8px 20px;border:1px solid var(--line)}
-.frows div{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid var(--line);font-size:15px}
-.frows div:last-child{border-bottom:0}
-.frows span{color:var(--muted)}.frows b{color:var(--navy)}.frows b.done{color:#1B7A43}
+.price-note{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:26px}
 .price-note div{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px 22px;font-size:15px;line-height:1.75;color:var(--muted)}
 .price-note b{color:var(--navy)}
 .faq{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
@@ -252,7 +236,7 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--navy);outline-of
   .facts{grid-template-columns:1fr 1fr;padding:44px 40px}
   .tl{grid-template-columns:1fr 1fr 1fr;row-gap:36px}.tl::before{display:none}
   .roles{grid-template-columns:1fr;gap:16px}.role.me{transform:none}
-  .price-note,.feat{grid-template-columns:1fr}
+  .price-note{grid-template-columns:1fr}
   .foot{grid-template-columns:1fr 1fr}
 }
 @media (max-width:760px){
@@ -308,7 +292,7 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--navy);outline-of
       <svg viewBox="-6 -60 232 226" aria-hidden="true"><path fill="#fff" fill-rule="evenodd" d="M0 0 H62 C90 0 104 16 104 40 C104 56 97 68 86 75 C100 82 108 96 108 114 C108 142 90 160 60 160 H0 Z M30 28 H58 C68 28 74 34 74 43 C74 52 68 58 58 58 H30 Z M30 88 H60 C72 88 78 96 78 110 C78 124 72 132 60 132 H30 Z"/><path fill="#00C7D6" stroke="#0A2D6B" stroke-width="9" paint-order="stroke" d="M104 0 H134 V62 L178 0 H216 L162 76 L220 160 H182 L144 104 L134 118 V160 H104 Z"/><path fill="#00C7D6" d="M120 -8 C144 -20 168 -36 184 -56 L202 -38 C182 -20 150 -8 120 -8 Z"/></svg>
       باشكاتب
     </a>
-    <div class="links"><a href="#how">إزاي بيشتغل</a><a href="#more">الخدمات</a><a href="#accountants">للمحاسبين</a><a href="#pricing">الأسعار</a><a href="#faq">أسئلة</a></div>
+    <div class="links"><a href="#how">إزاي بيشتغل</a><a href="#accountants">للمحاسبين</a><a href="#pricing">الأسعار</a><a href="#faq">أسئلة</a></div>
     <div class="act"><a class="btn btn-ghost" href="https://ghsh2008.github.io/Live-Artifacts/">دخول العملاء</a><a class="btn btn-tq" href="#pricing">ابدأ دلوقتي</a></div>
   </nav>
 </header>
@@ -374,7 +358,7 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--navy);outline-of
       <ul><li>تصوّر وتبعت على الواتساب، وده كل شغلك</li><li>دفاترك بتتسجّل كل يوم على برنامجك أو على نظامنا</li><li>تقرير شهري بالعربي، مراجَع من محاسبين</li><li>بتسلّم محاسبك الضريبي دفاتر جاهزة</li></ul>
       <a class="btn btn-navy" href="#pricing">اختار باقتك</a></div>
     <div class="who dark rv d1"><span class="big-n lat" aria-hidden="true">02</span><span class="tag">لو إنت محاسب أو مكتب محاسبة</span><h3 class="h">امسك شركات أكتر بنفس الوقت.</h3>
-      <ul><li>عملاءك يبعتوا مستنداتهم على الواتساب بدل ما تجري وراهم</li><li>النظام يسجّل ويطابق البنك، وإنت تراجع وتعتمد</li><li>كل شركاتك في شاشة واحدة، وكل سؤال للعميل متسجّل</li><li><span>باسم مكتبك: عملاءك يشوفوا اسمك إنت، وإحنا شغالين من ورا <span class="soon" style="margin-right:4px">قريباً</span></span></li></ul>
+      <ul><li>عملاءك يبعتوا مستنداتهم على الواتساب بدل ما تجري وراهم</li><li>النظام يسجّل ويطابق البنك، وإنت تراجع وتعتمد</li><li>كل شركاتك في شاشة واحدة، وكل سؤال للعميل متسجّل</li></ul>
       <button class="btn btn-tq" data-open data-plan="محاسب / مكتب محاسبة" data-title="سجّل كمحاسب أو مكتب محاسبة" data-sub="سيب بياناتك وهنكلّمك على واتساب نعرف شغلك ماشي إزاي وعدد شركاتك.">سجّل اهتمامك</button></div>
   </div>
 </section>
@@ -388,43 +372,9 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--navy);outline-of
     <div><span class="n lat">01</span><h4>تسجيل يومي</h4><p>الفواتير والمصاريف بتتسجّل في نفس يوم وصولها.</p></div>
     <div><span class="n lat">02</span><h4>مطابقة البنك</h4><p>كل حركة في الكشف ليها مستند، وأي حاجة ناقصة بنسألك عليها.</p></div>
     <div><span class="n lat">03</span><h4>تقرير شهري بالعربي</h4><p>بعت كام، صرفت كام، الصافي، ومين مديون لك.</p></div>
-    <div><span class="n lat">04</span><h4>متابعة المديونيات</h4><p>مين متأخر عليك وبكام ومن إمتى، كل شهر في التقرير.</p></div>
+    <div><span class="n lat">04</span><h4>متابعة المديونيات</h4><p>مين متأخر عليك وبكام، وتذكير بالتحصيل بموافقتك.</p></div>
     <div><span class="n lat">05</span><h4>على برنامجك أو برنامجنا</h4><p>عندك برنامج؟ نشتغل عليه. مش عندك؟ نمسك دفاترك على نظامنا.</p></div>
     <div><span class="n lat">06</span><h4>تنبيه المستندات<span class="soon">قريباً</span></h4><p>قبل انتهاء السجل التجاري والبطاقة الضريبية بـ 30 يوم.</p></div>
-  </div>
-</section>
-
-<section class="sec" id="more" style="padding-top:0">
-  <div class="sec-h rv">
-    <div><span class="eyebrow"><i></i>وأكتر من مسك دفاتر</span><h2 class="h">دفاترك بترد عليك، مش بس بتتسجّل.</h2></div>
-    <p>خدمات فوق الأساس، عشان تعرف وضع شركتك من غير ما تستنى آخر الشهر. اللي عليه «قريباً» بنجهّزه دلوقتي.</p>
-  </div>
-  <div class="feat">
-    <div class="fc dark rv"><span class="tag">اسأل دفاترك<span class="soon">قريباً</span></span>
-      <h3 class="h">اسأل على الواتساب، والرد من دفاترك.</h3>
-      <p>اكتب سؤالك أو ابعته فويس بالمصري، والرد ييجي بالأرقام من دفاترك إنت.</p>
-      <div class="fchat" aria-hidden="true">
-        <div class="q">معايا كام في البنك؟</div>
-        <div class="a">رصيد البنك النهارده <span class="lat">218,400</span> ج</div>
-        <div class="q">مين متأخر عليّا؟</div>
-        <div class="a">3 عملاء، أكبرهم <span class="lat">42,000</span> ج من 45 يوم</div>
-      </div></div>
-    <div class="fc light rv d1"><span class="tag">عهدة موظفينك<span class="soon">قريباً</span></span>
-      <h3 class="h">موظفك يبعت الإيصال، وإنت تعرف العهدة فين.</h3>
-      <p>المندوب أو السواق يبعت إيصاله على رقم شركتك، ويتسجّل على عهدته، وتشوف رصيد كل واحد.</p>
-      <div class="frows" aria-hidden="true">
-        <div><span>المندوب</span><b>باقي معاه <span class="lat">3,250</span> ج</b></div>
-        <div><span>السواق</span><b>باقي معاه <span class="lat">780</span> ج</b></div>
-        <div><span>المشتريات</span><b class="done">متقفلة ✓</b></div>
-      </div></div>
-  </div>
-  <div class="svc rv">
-    <div><span class="n lat">07</span><h4>تحصيل بالنيابة عنك</h4><p>نفكّر عملاءك المتأخرين برسالة مؤدبة، ومفيش رسالة بتطلع من غير موافقتك.</p></div>
-    <div><span class="n lat">08</span><h4>تنبيه السيولة<span class="soon">قريباً</span></h4><p>لو فلوسك مش هتكفي الإيجار والمرتبات الشهر الجاي، تعرف من بدري.</p></div>
-    <div><span class="n lat">09</span><h4>فلوسك وفلوس الشركة</h4><p>سحبت كام لنفسك الشهر ده، مفصول عن مصاريف الشركة.</p></div>
-    <div><span class="n lat">10</span><h4>ملف لمحاسبك الضريبي</h4><p>كل شهر ملف مرتب بالمستندات والكشوف، يستلمه محاسبك جاهز.</p></div>
-    <div><span class="n lat">11</span><h4>أي مستند في ثواني</h4><p>عايز فاتورة قديمة؟ اطلبها على الواتساب وتوصلك من أرشيفك.</p></div>
-    <div><span class="n lat">12</span><h4>مطابقة كشوف الموردين</h4><p>نطابق حسابك مع كشف المورد، ونطلّعلك الفرق لو فيه.</p></div>
   </div>
 </section>
 </main>
@@ -459,17 +409,16 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--navy);outline-of
   </div>
   <div class="plans">
     <div class="plan rv"><h4>بداية</h4><div class="cap">لحد 50 مستند في الشهر</div><div class="price"><b class="lat">2,500</b><span>ج / شهر</span></div>
-      <ul><li>تسجيل الفواتير والمصاريف</li><li>تصنيف ومطابقة البنك</li><li>تقرير شهري بالعربي، فيه سحوباتك من الشركة</li><li>ملف شهري لمحاسبك الضريبي</li><li>أي مستند قديم تطلبه على الواتساب</li><li>رقم واتساب خاص بشركتك</li></ul><button class="btn btn-navy" data-open data-plan="بداية">اشترك في بداية</button></div>
+      <ul><li>تسجيل الفواتير والمصاريف</li><li>تصنيف ومطابقة البنك</li><li>تقرير شهري بالعربي</li><li>رقم واتساب خاص بشركتك</li></ul><button class="btn btn-navy" data-open data-plan="بداية">اشترك في بداية</button></div>
     <div class="plan hot rv d1"><span class="badge">الأنسب لأغلب الشركات</span><h4>نمو</h4><div class="cap">لحد 100 مستند في الشهر</div><div class="price"><b class="lat">5,000</b><span>ج / شهر</span></div>
-      <ul><li>كل اللي في بداية</li><li>متابعة مديونيات العملاء</li><li>تحصيل بالنيابة عنك بموافقتك</li><li>مطابقة كشوف الموردين</li><li>مكالمة مراجعة شهرية 20 دقيقة</li></ul><button class="btn btn-tq" data-open data-plan="نمو">اشترك في نمو</button></div>
+      <ul><li>كل اللي في بداية</li><li>متابعة مديونيات العملاء</li><li>تذكير بالتحصيل بموافقتك</li><li>مكالمة مراجعة شهرية 20 دقيقة</li></ul><button class="btn btn-tq" data-open data-plan="نمو">اشترك في نمو</button></div>
     <div class="plan rv d2"><h4>شركة</h4><div class="cap">أكتر من 100 مستند أو أكتر من بنك</div><div class="price"><b style="font-size:42px">عرض سعر</b></div>
-      <ul><li>كل اللي في نمو</li><li>أكتر من حساب بنكي أو عهدة</li><li>تقرير بالمشاريع أو الفروع</li></ul><button class="btn btn-navy" data-open data-plan="شركة" data-title="اطلب عرض سعر" data-sub="قول لنا عدد مستنداتك وبنوكك تقريباً، وهنبعت لك السعر على واتساب.">اطلب عرض سعر</button></div>
+      <ul><li>كل اللي في نمو</li><li>أكتر من حساب بنكي أو عهدة</li><li>تقرير بالمشاريع أو الفروع</li><li>تسليم الدفاتر للمحاسب الضريبي</li></ul><button class="btn btn-navy" data-open data-plan="شركة" data-title="اطلب عرض سعر" data-sub="قول لنا عدد مستنداتك وبنوكك تقريباً، وهنبعت لك السعر على واتساب.">اطلب عرض سعر</button></div>
   </div>
   <div class="price-note rv">
     <div><b>من غير برنامج محاسبي؟</b> نمسك دفاترك على نظامنا بـ <span class="lat">1,250</span> ج في الشهر فوق سعر الباقة، وتستلم تقريرك ونسخة إكسيل.</div>
     <div><b>عدّيت حد باقتك؟</b> المستند الزيادة بـ <span class="lat">50</span> ج، وبنبلّغك أول ما تعدّي، ومن الشهر اللي بعده بتتنقل للباقة الأعلى.</div>
     <div><b>دفاترك القديمة ملخبطة؟</b> بنرتّبها مرة واحدة في الأول، من <span class="lat">3,000</span> لـ <span class="lat">6,000</span> ج حسب الحجم.</div>
-    <div><b>طالب تسهيلات من البنك؟</b> نجهّز ملف دفاترك وكشوفك مرتب بالشكل اللي البنك بيطلبه، مرة واحدة بعرض سعر.</div>
   </div>
 </div></section>
 
@@ -493,7 +442,7 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--navy);outline-of
 
 <footer class="foot in">
   <div><a class="brand" href="#top"><svg viewBox="-6 -60 232 226" aria-hidden="true"><path fill="#0A2D6B" fill-rule="evenodd" d="M0 0 H62 C90 0 104 16 104 40 C104 56 97 68 86 75 C100 82 108 96 108 114 C108 142 90 160 60 160 H0 Z M30 28 H58 C68 28 74 34 74 43 C74 52 68 58 58 58 H30 Z M30 88 H60 C72 88 78 96 78 110 C78 124 72 132 60 132 H30 Z"/><path fill="#00C7D6" stroke="#fff" stroke-width="9" paint-order="stroke" d="M104 0 H134 V62 L178 0 H216 L162 76 L220 160 H182 L144 104 L134 118 V160 H104 Z"/><path fill="#00C7D6" d="M120 -8 C144 -20 168 -36 184 -56 L202 -38 C182 -20 150 -8 120 -8 Z"/></svg>باشكاتب</a><p style="line-height:1.8;margin:16px 0 0;max-width:320px">مسك دفاتر باشتراك شهري للشركات الصغيرة في مصر.</p></div>
-  <div><h5>الخدمة</h5><a href="#how">إزاي بيشتغل</a><a href="#more">الخدمات</a><a href="#pricing">الأسعار</a><a href="#accountants">للمحاسبين</a></div>
+  <div><h5>الخدمة</h5><a href="#how">إزاي بيشتغل</a><a href="#pricing">الأسعار</a><a href="#accountants">للمحاسبين</a></div>
   <div><h5>العملاء</h5><a href="https://ghsh2008.github.io/Live-Artifacts/">دخول العملاء</a><a href="#faq">أسئلة</a></div>
   <div><h5>تواصل</h5><a class="lat" href="mailto:info@bashkateb.net">info@bashkateb.net</a><a href="/terms">شروط الخدمة والعقد</a><a href="/privacy">سياسة البيانات</a></div>
   <div class="copy"><span>© 2026 باشكاتب</span><span class="lat">bashkateb.net</span></div>
