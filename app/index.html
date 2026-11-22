@@ -1,0 +1,531 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>باشكاتب — تطبيق العملاء</title>
+<meta name="description" content="تطبيق عملاء باشكاتب: سجّل شركتك، ارفع مستنداتك، وتابع دفاترك.">
+<meta name="theme-color" content="#061E4A">
+<meta name="robots" content="noindex">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/svg+xml" href="/assets/bashkateb-icon.svg">
+<link rel="apple-touch-icon" href="/assets/icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="باشكاتب">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@300;400;500;600;700&family=Changa:wght@600;700;800&display=swap">
+<style>
+:root{--navy:#0A2D6B;--navy2:#123A80;--deep:#061E4A;--tq:#00C7D6;--tq2:#008E9A;--ice:#F2F9FE;--ice2:#E6F6FF;--line:#D6E6F2;--ink:#10203A;--muted:#5B6B82;--ok:#0E8A5F;--okbg:#E4F6EE;--warn:#9A6200;--warnbg:#FFF3D6;--bad:#B3261E;--badbg:#FDE8E6}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{font-family:'Readex Pro',system-ui,sans-serif;background:var(--ice);color:var(--ink);-webkit-font-smoothing:antialiased;font-size:15px;line-height:1.6}
+button,input,select,textarea{font:inherit;color:inherit}
+.h{font-family:'Changa','Readex Pro',sans-serif;font-weight:800;line-height:1.2;margin:0}
+.n{direction:ltr;unicode-bidi:isolate;display:inline-block}
+#app{max-width:640px;margin:0 auto;min-height:100%;display:flex;flex-direction:column;background:var(--ice)}
+.top{background:linear-gradient(180deg,var(--deep),var(--navy));color:#fff;padding:calc(14px + env(safe-area-inset-top)) 18px 16px;position:sticky;top:0;z-index:20}
+.top .row{display:flex;align-items:center;gap:10px}
+.top svg{width:34px;height:34px;flex:none}
+.top .t{font-family:'Changa';font-weight:800;font-size:20px;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top small{display:block;color:#B9CCEB;font-size:12.5px;font-family:'Readex Pro';font-weight:400}
+.top select{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.3);border-radius:10px;padding:6px 8px;max-width:46%}
+.top select option{color:var(--ink)}
+.iconbtn{background:rgba(255,255,255,.12);border:0;color:#fff;border-radius:10px;min-width:40px;min-height:40px;cursor:pointer;font-size:13px;padding:0 10px}
+main{flex:1;padding:16px 16px calc(96px + env(safe-area-inset-bottom))}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:12px}
+.card h3{margin:0 0 8px;font-size:16px;font-weight:700}
+.muted{color:var(--muted)} .sm{font-size:13px} .mt{margin-top:10px} .mb0{margin-bottom:0}
+.row{display:flex;gap:10px;align-items:center} .wrap{flex-wrap:wrap} .grow{flex:1;min-width:0} .sp{justify-content:space-between}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:12px;padding:11px 18px;font-weight:600;border:0;cursor:pointer;min-height:46px;background:var(--navy);color:#fff;text-decoration:none}
+.btn:disabled{opacity:.55;cursor:default}
+.btn.tq{background:var(--tq);color:var(--deep)}
+.btn.ghost{background:#fff;color:var(--navy);border:1.5px solid var(--line)}
+.btn.bad{background:#fff;color:var(--bad);border:1.5px solid #F2C4C0}
+.btn.sm{min-height:38px;padding:7px 12px;font-size:13.5px;border-radius:10px}
+.btn.block{display:flex;width:100%}
+.btn.big{min-height:60px;font-size:17px;border-radius:16px}
+:focus-visible{outline:3px solid var(--tq);outline-offset:2px}
+label{display:block;font-weight:500;font-size:14px;margin:12px 0 5px}
+label i{font-style:normal;color:var(--bad)}
+input[type=text],input[type=tel],input[type=password],input[type=email],input[type=number],input[type=date],input[type=month],select,textarea{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:11px 12px;background:#fff;min-height:46px}
+textarea{min-height:84px;resize:vertical}
+input:focus,select:focus,textarea:focus{outline:0;border-color:var(--tq2)}
+.ltr{direction:ltr;text-align:right}
+.pill{display:inline-block;border-radius:999px;padding:2px 10px;font-size:12.5px;font-weight:600;background:var(--ice2);color:var(--navy);white-space:nowrap}
+.pill.ok{background:var(--okbg);color:var(--ok)} .pill.warn{background:var(--warnbg);color:var(--warn)} .pill.bad{background:var(--badbg);color:var(--bad)}
+.tabs{position:fixed;bottom:0;left:0;right:0;z-index:30;background:#fff;border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
+.tabs .in{max-width:640px;margin:0 auto;display:flex}
+.tabs button{flex:1;background:none;border:0;padding:9px 2px 8px;cursor:pointer;color:var(--muted);font-size:12px;position:relative;min-height:58px}
+.tabs button svg{display:block;margin:0 auto 2px;width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.tabs button.on{color:var(--navy);font-weight:700}
+.tabs button.on::before{content:"";position:absolute;top:0;right:22%;left:22%;height:3px;background:var(--tq);border-radius:0 0 3px 3px}
+.badge{position:absolute;top:5px;left:calc(50% - 22px);background:var(--bad);color:#fff;border-radius:999px;font-size:11px;min-width:18px;height:18px;line-height:18px;padding:0 4px;font-weight:700}
+.seg{display:flex;background:var(--ice2);border-radius:12px;padding:4px;gap:4px;margin-bottom:12px}
+.seg button{flex:1;border:0;background:none;border-radius:9px;padding:9px 4px;cursor:pointer;color:var(--muted);font-weight:500;min-height:42px}
+.seg button.on{background:#fff;color:var(--navy);font-weight:700;box-shadow:0 1px 4px rgba(10,45,107,.12)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:8px 14px;cursor:pointer;min-height:42px}
+.chip.on{background:var(--navy);border-color:var(--navy);color:#fff;font-weight:600}
+.meter{height:12px;background:var(--ice2);border-radius:999px;overflow:hidden;margin:8px 0}
+.meter b{display:block;height:100%;background:var(--tq);border-radius:999px}
+.meter.over b{background:#E0A100}
+.big-n{font-family:'Changa';font-weight:800;font-size:30px;line-height:1.1}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.kpi{background:var(--ice);border-radius:12px;padding:10px;text-align:center}
+.kpi b{display:block;font-size:16px;font-weight:700}
+.kpi span{font-size:12px;color:var(--muted)}
+.item{padding:12px 0;border-top:1px solid var(--line)} .item:first-child{border-top:0;padding-top:0} .item:last-child{padding-bottom:0}
+.track{display:flex;gap:4px;margin-top:6px}
+.track i{flex:1;height:5px;border-radius:3px;background:var(--ice2)} .track i.on{background:var(--tq)} .track i.bad{background:#E58A83}
+.thumbs{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.thumb{width:74px;height:74px;border-radius:10px;border:1px solid var(--line);background:var(--ice) center/cover no-repeat;position:relative;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--muted)}
+.thumb button{position:absolute;top:-8px;left:-8px;width:26px;height:26px;border-radius:50%;border:0;background:var(--bad);color:#fff;cursor:pointer;line-height:1}
+.plan{border:2px solid var(--line);border-radius:14px;padding:14px;margin-bottom:10px;cursor:pointer;background:#fff;display:block;width:100%;text-align:right}
+.plan.on{border-color:var(--tq2);background:var(--ice)}
+.plan b{font-size:16px} .plan .p{font-family:'Changa';font-weight:800;font-size:20px;color:var(--navy)}
+.steps{display:flex;gap:6px;margin-bottom:14px} .steps i{flex:1;height:6px;border-radius:3px;background:var(--line)} .steps i.on{background:var(--tq)}
+canvas.sig{width:100%;height:170px;border:2px dashed var(--line);border-radius:14px;background:#fff;touch-action:none;display:block}
+.note{background:var(--ice2);border-radius:12px;padding:10px 12px;font-size:13.5px;margin-top:10px}
+.note.warn{background:var(--warnbg);color:#5C3B00} .note.bad{background:var(--badbg);color:#7A1A14}
+.auth{padding:28px 20px;flex:1;display:flex;flex-direction:column;justify-content:center;background:linear-gradient(180deg,var(--deep),var(--navy) 46%,var(--ice) 46%)}
+.auth .logo{color:#fff;text-align:center;margin-bottom:22px}
+.auth .logo svg{width:64px;height:64px}
+.auth .logo .h{font-size:30px;margin-top:6px}
+.auth .card{box-shadow:0 18px 50px rgba(6,30,74,.2);border:0;padding:20px}
+.toast{position:fixed;bottom:calc(80px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);background:var(--deep);color:#fff;padding:11px 18px;border-radius:12px;z-index:60;max-width:90%;text-align:center;box-shadow:0 8px 30px rgba(0,0,0,.25)}
+.toast.bad{background:var(--bad)}
+.modal{position:fixed;inset:0;background:rgba(6,30,74,.55);z-index:50;display:flex;align-items:flex-end;justify-content:center}
+.sheet{background:#fff;border-radius:20px 20px 0 0;width:100%;max-width:640px;max-height:92%;overflow:auto;padding:18px 18px calc(22px + env(safe-area-inset-bottom))}
+.sheet img{max-width:100%;border-radius:10px;display:block;margin:8px auto}
+.sheet .x{float:left}
+details{border-top:1px solid var(--line);padding:10px 0} details summary{cursor:pointer;font-weight:600;min-height:32px}
+table.kv{width:100%;border-collapse:collapse;font-size:14px} table.kv td{padding:5px 0;vertical-align:top;border-bottom:1px solid var(--ice2)} table.kv td:first-child{color:var(--muted);width:42%}
+.center{text-align:center} .empty{text-align:center;color:var(--muted);padding:26px 10px}
+.spin{width:28px;height:28px;border:3px solid var(--line);border-top-color:var(--tq2);border-radius:50%;animation:s 1s linear infinite;margin:40px auto}
+@keyframes s{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.spin{animation:none}}
+.lines .ln{display:grid;grid-template-columns:1fr 64px 86px 34px;gap:6px;margin-bottom:6px}
+.lines .ln button{border:0;background:var(--badbg);color:var(--bad);border-radius:10px;cursor:pointer}
+</style>
+</head>
+<body>
+<div id="app"><div class="spin"></div></div>
+<script>
+(function(){'use strict';
+const API='https://vuqydfqlfnzfwsosbrmo.supabase.co/functions/v1/bk-app';
+const WA='201281730999';
+const LOGO='<svg xmlns="http://www.w3.org/2000/svg" viewBox="-6 -60 232 226"><path d="M0 0 H62 C90 0 104 16 104 40 C104 56 97 68 86 75 C100 82 108 96 108 114 C108 142 90 160 60 160 H0 Z M30 28 H58 C68 28 74 34 74 43 C74 52 68 58 58 58 H30 Z M30 88 H60 C72 88 78 96 78 110 C78 124 72 132 60 132 H30 Z" fill="#fff" fill-rule="evenodd"/><path d="M104 0 H134 V62 L178 0 H216 L162 76 L220 160 H182 L144 104 L134 118 V160 H104 Z" fill="#00C7D6"/><path d="M120 -8 C144 -20 168 -36 184 -56 L202 -38 C182 -20 150 -8 120 -8 Z" fill="#00C7D6"/></svg>';
+const IC={home:'<path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/>',docs:'<path d="M7 3h8l4 4v14H7z"/><path d="M15 3v4h4M10 12h6M10 16h6"/>',q:'<path d="M4 5h16v11H9l-5 4z"/><path d="M10 9.5a2 2 0 113 1.7c-.6.4-1 .8-1 1.3M12 14.2v.1"/>',req:'<path d="M5 4h14v16H5z"/><path d="M9 9h6M9 13h6M12 4v-1"/>',me:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>',rev:'<path d="M4 6h16M4 12h10M4 18h7"/><path d="M15 17l2 2 4-5"/>',cl:'<path d="M3 21V8l6-4v17M9 21V10h12v11M13 14h4M13 17h4"/>'};
+const KIND={purchase:'فاتورة مشتريات',sale:'فاتورة مبيعات',expense:'مصروف / إيصال',bank:'كشف بنك',other:'مستند تاني',kyc_cr:'السجل التجاري',kyc_tax:'البطاقة الضريبية',kyc_id:'بطاقة صاحب الشركة'};
+const DSTAT={received:'اتستلم',reviewed:'المحاسب راجعه',posted:'اتسجل',returned:'رجع لك'};
+const PLAN={start:'بداية',growth:'نمو',company:'شركة',sa:'السعودية',office:'مكتب محاسبة'};
+const CSTAT={onboarding:'بيكمّل التسجيل',pending_review:'مستني التفعيل',active:'شغال',paused:'موقوف'};
+const RTYPE={invoice:'فاتورة لعميل',quote:'عرض سعر',po:'أمر شراء',so:'أمر بيع',copy:'نسخة من مستند',other:'طلب تاني'};
+const RSTAT={new:'وصلنا',in_progress:'شغالين عليه',done:'جاهز',rejected:'محتاج مراجعة'};
+const FORM=[['company_name','اسم الشركة',1],['legal_form','الشكل القانوني',0,['منشأة فردية','شركة ذات مسؤولية محدودة','شركة شخص واحد','تضامن / توصية','مساهمة','لسه بتتأسس','حاجة تانية']],['activity','النشاط',1],['owner_name','اسم صاحب الشركة أو المفوّض',1],['cr_no','رقم السجل التجاري',0,'ltr'],['tax_no','رقم التسجيل الضريبي',0,'ltr'],['vat','مسجّل في ضريبة القيمة المضافة؟',0,['أيوه','لأ','مش متأكد']],['email','الإيميل',0,'ltr'],['address','العنوان',0],['employees','عدد الموظفين',0,'ltr'],['start_month','عايزين نبدأ الدفاتر من شهر',0,'month']];
+const FORM2=[['docs_month','تقريباً كام مستند في الشهر؟'],['banks','البنوك (اسم كل بنك)'],['software','البرنامج المحاسبي'],['sa_tax','خدمة الضرائب للسعودية']];
+
+const S={token:null,user:null,clients:[],cid:null,tab:'home',data:{},installEvt:null};
+try{S.token=localStorage.getItem('bk_token');S.cid=localStorage.getItem('bk_cid')}catch(e){}
+const store=(k,v)=>{try{v==null?localStorage.removeItem(k):localStorage.setItem(k,v)}catch(e){}};
+const $app=document.getElementById('app');
+
+function h(tag,a,...kids){const e=document.createElement(tag);
+  if(a)for(const k in a){const v=a[k];if(v==null||v===false)continue;
+    if(k==='class')e.className=v;else if(k==='html')e.innerHTML=v;else if(k==='style')e.style.cssText=v;
+    else if(k.startsWith('on'))e.addEventListener(k.slice(2),v);else if(k==='value'||k==='checked'||k==='disabled'||k==='selected')e[k]=v;else e.setAttribute(k,v===true?'':v)}
+  for(const c of kids.flat(Infinity)){if(c==null||c===false||c==='')continue;e.append(c.nodeType?c:document.createTextNode(String(c)))}
+  return e}
+const svg=(p)=>h('span',{html:'<svg viewBox="0 0 24 24" aria-hidden="true">'+p+'</svg>'}).firstChild;
+const num=(x)=>h('span',{class:'n'},x);
+const fmt=(n)=>Number(n).toLocaleString('en-US',{maximumFractionDigits:2});
+const money=(n,c)=>[num(fmt(n)),' ',({EGP:'ج',SAR:'ر.س',USD:'$'})[c||'EGP']||c];
+const dt=(s)=>s?new Date(s).toLocaleDateString('ar-EG-u-nu-latn',{day:'numeric',month:'short'}):'';
+const dtt=(s)=>s?new Date(s).toLocaleString('ar-EG-u-nu-latn',{day:'numeric',month:'short',hour:'numeric',minute:'2-digit'}):'';
+const perName=(p)=>{const [y,m]=p.split('-');return new Date(y,m-1,1).toLocaleDateString('ar-EG-u-nu-latn',{month:'long',year:'numeric'})};
+function toast(msg,bad){document.querySelectorAll('.toast').forEach(t=>t.remove());const t=h('div',{class:'toast'+(bad?' bad':''),role:'status'},msg);document.body.append(t);setTimeout(()=>t.remove(),bad?5000:2600)}
+async function api(action,data){
+  let r;try{r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action,token:S.token,...(data||{})})})}
+  catch(e){throw new Error('مفيش اتصال بالإنترنت، جرّب تاني')}
+  let j;try{j=await r.json()}catch(e){throw new Error('حصل خطأ، جرّب تاني')}
+  if(!j.ok){if(j.code==='auth'){S.token=null;store('bk_token',null);S.user=null;render()}const er=new Error(j.error||'حصل خطأ');er.code=j.code;throw er}
+  return j}
+async function run(btn,fn){if(btn){if(btn.disabled)return;btn.disabled=true}try{await fn()}catch(e){toast(e.message||'حصل خطأ',true)}finally{if(btn)btn.disabled=false}}
+function modal(build){const m=h('div',{class:'modal',onclick:(e)=>{if(e.target===m)m.remove()}});const sh=h('div',{class:'sheet',role:'dialog','aria-modal':'true'});
+  const close=()=>m.remove();sh.append(h('button',{class:'btn ghost sm x',onclick:close},'قفل'));build(sh,close);m.append(sh);document.body.append(m);return close}
+function field(label,input,req){return [h('label',null,label,req?h('i',null,' *'):null),input]}
+function inp(o){return h('input',Object.assign({type:'text'},o))}
+function sel(opts,val,o){return h('select',o||null,opts.map(x=>{const [v,t]=Array.isArray(x)?x:[x,x];return h('option',{value:v,selected:v===val},t)}))}
+
+/* ---------- files ---------- */
+async function shrink(file){
+  if(!/^image\/(jpeg|png|webp)$/.test(file.type))return file;
+  try{const bmp=await createImageBitmap(file);const max=2000,sc=Math.min(1,max/Math.max(bmp.width,bmp.height));
+    const c=document.createElement('canvas');c.width=Math.round(bmp.width*sc);c.height=Math.round(bmp.height*sc);c.getContext('2d').drawImage(bmp,0,0,c.width,c.height);
+    const blob=await new Promise(r=>c.toBlob(r,'image/jpeg',.82));return blob&&blob.size<file.size?blob:file}catch(e){return file}}
+async function upload(cid,file){
+  const body=await shrink(file);const type=(body.type||file.type||'').split(';')[0];
+  if(body.size>20*1024*1024)throw new Error('الملف أكبر من 20 ميجا');
+  const u=await api('upload_url',{client_id:cid,content_type:type});
+  const r=await fetch(u.url,{method:'PUT',headers:{'Content-Type':type},body});
+  if(!r.ok)throw new Error('الرفع ما كملش، جرّب تاني');
+  return u.path}
+async function openFile(cid,path){
+  try{const {url}=await api('file_url',{client_id:cid,path});const img=/\.(jpg|png|webp)$/.test(path),aud=/\.(webm|m4a|ogg|mp3)$/.test(path);
+    modal(sh=>{sh.append(h('h3',{class:'h',style:'font-size:18px;margin:4px 0 10px'},'الملف'));
+      if(img)sh.append(h('img',{src:url,alt:'صورة المستند'}));
+      if(aud)sh.append(h('audio',{src:url,controls:true,style:'width:100%'}));
+      sh.append(h('a',{class:'btn block mt',href:url,target:'_blank',rel:'noopener'},img||aud?'افتحه في صفحة لوحده':'افتح الملف'))})}
+  catch(e){toast(e.message,true)}}
+function filePicker(o){ // returns {el, files[]}
+  const st={files:[]};const thumbs=h('div',{class:'thumbs'});
+  const draw=()=>{thumbs.replaceChildren(...st.files.map((f,i)=>{const t=h('div',{class:'thumb'},f.type.startsWith('image/')?null:(f.name.split('.').pop()||'ملف').toUpperCase(),h('button',{type:'button','aria-label':'شيل الملف',onclick:()=>{st.files.splice(i,1);draw()}},'×'));
+    if(f.type.startsWith('image/'))t.style.backgroundImage='url('+URL.createObjectURL(f)+')';return t}))};
+  const add=(list)=>{for(const f of list){if(st.files.length<(o.max||20))st.files.push(f)}draw();o.onchange&&o.onchange()};
+  const cam=h('input',{type:'file',accept:'image/*',capture:'environment',hidden:true,onchange:e=>{add(e.target.files);e.target.value=''}});
+  const pick=h('input',{type:'file',accept:o.accept||'image/*,application/pdf,.xlsx,.xls,.csv',multiple:(o.max||20)>1,hidden:true,onchange:e=>{add(e.target.files);e.target.value=''}});
+  st.el=h('div',null,cam,pick,h('div',{class:'row'},h('button',{type:'button',class:'btn tq grow',onclick:()=>cam.click()},'صوّر'),h('button',{type:'button',class:'btn ghost grow',onclick:()=>pick.click()},'اختار ملف')),thumbs);
+  return st}
+function recorder(){ // voice note
+  const st={blob:null};let mr=null,chunks=[];
+  const lab=h('span',{class:'sm muted'},'');const b=h('button',{type:'button',class:'btn ghost sm'},'سجّل فويس');
+  b.onclick=async()=>{
+    if(mr&&mr.state==='recording'){mr.stop();return}
+    if(st.blob){st.blob=null;lab.textContent='';b.textContent='سجّل فويس';return}
+    if(!navigator.mediaDevices||!window.MediaRecorder){toast('التسجيل مش مدعوم على المتصفح ده، اكتب ملاحظتك',true);return}
+    try{const stream=await navigator.mediaDevices.getUserMedia({audio:true});chunks=[];mr=new MediaRecorder(stream);
+      mr.ondataavailable=e=>chunks.push(e.data);
+      mr.onstop=()=>{stream.getTracks().forEach(t=>t.stop());st.blob=new Blob(chunks,{type:(mr.mimeType||'audio/webm').split(';')[0]});lab.textContent='الفويس اتسجل';b.textContent='امسح الفويس'};
+      mr.start();b.textContent='وقّف التسجيل';lab.textContent='بيسجّل...'}
+    catch(e){toast('اسمح للتطبيق يستخدم المايك',true)}};
+  st.el=h('div',{class:'row mt'},b,lab);return st}
+
+/* ---------- shell ---------- */
+function top(title,sub,right){return h('header',{class:'top'},h('div',{class:'row'},h('span',{html:LOGO}).firstChild,h('div',{class:'t'},title,sub?h('small',null,sub):null),right||null))}
+function tabsBar(defs){return h('nav',{class:'tabs','aria-label':'التنقل'},h('div',{class:'in'},defs.map(([k,t,ic,badge])=>h('button',{class:S.tab===k?'on':'','aria-current':S.tab===k?'page':null,onclick:()=>{S.tab=k;S.sub=null;render()}},svg(IC[ic]),t,badge?h('span',{class:'badge'},badge):null))))}
+const loading=()=>h('div',{class:'spin',role:'status','aria-label':'بيحمّل'});
+function page(...kids){const m=h('main',null,...kids);return m}
+let renderSeq=0;
+async function render(){
+  const seq=++renderSeq;
+  if(!S.token){$app.replaceChildren(viewAuth());return}
+  if(!S.user){$app.replaceChildren(loading());try{const me=await api('me');S.user=me.user;S.clients=me.clients}catch(e){if(S.token){$app.replaceChildren(h('div',{class:'empty'},e.message,h('br'),h('button',{class:'btn mt',onclick:render},'جرّب تاني')))}return}
+    if(seq!==renderSeq)return}
+  const staff=S.user.role==='admin'||S.user.role==='accountant';
+  if(staff){if(!['queue','follow','clients'].includes(S.tab))S.tab='queue';return staffApp(seq)}
+  if(!S.clients.find(c=>c.id===S.cid)){S.cid=S.clients[0]&&S.clients[0].id;store('bk_cid',S.cid)}
+  const c=S.clients.find(x=>x.id===S.cid);
+  if(!c){$app.replaceChildren(top('باشكاتب'),page(h('div',{class:'empty'},'مفيش شركة على الحساب ده.')));return}
+  if(c.status==='onboarding')return viewOnboarding(c,seq);
+  if(!['home','docs','questions','requests','account'].includes(S.tab))S.tab='home';
+  clientApp(c,seq)}
+function logout(){api('logout').catch(()=>{});S.token=null;S.user=null;S.clients=[];S.data={};store('bk_token',null);render()}
+function clientSwitcher(){
+  if(S.user.role!=='office'&&S.clients.length<2)return null;
+  const s=sel(S.clients.map(c=>[c.id,c.company_name||'شركة جديدة']).concat(S.user.role==='office'?[['+','+ شركة جديدة']]:[]),S.cid,{'aria-label':'اختار الشركة'});
+  s.onchange=async()=>{if(s.value==='+'){const name=prompt('اسم الشركة الجديدة');if(!name){s.value=S.cid;return}
+      try{const r=await api('client_add',{company:name});S.user=null;S.cid=r.id;store('bk_cid',r.id);S.tab='home';render()}catch(e){toast(e.message,true);s.value=S.cid}return}
+    S.cid=s.value;store('bk_cid',S.cid);S.tab='home';S.data={};render()};
+  return s}
+
+/* ---------- auth ---------- */
+function viewAuth(){
+  let mode=S.authMode||'login';const box=h('div',{class:'card'});
+  const draw=()=>{
+    const phone=inp({type:'tel',class:'ltr',inputmode:'tel',autocomplete:'tel',placeholder:'01xxxxxxxxx'});
+    const pin=inp({type:'password',class:'ltr',inputmode:'numeric',maxlength:6,autocomplete:mode==='login'?'current-password':'new-password',placeholder:'6 أرقام'});
+    const kids=[h('div',{class:'seg'},h('button',{class:mode==='login'?'on':'',onclick:()=>{mode='login';draw()}},'دخول'),h('button',{class:mode==='signup'?'on':'',onclick:()=>{mode='signup';draw()}},'حساب جديد'))];
+    let name,company,kind='client',market='eg',code;
+    if(mode==='signup'){name=inp({autocomplete:'name'});company=inp({});
+      const kc=h('div',{class:'chips'});const mk=h('div',{class:'chips'});
+      const dk=()=>kc.replaceChildren(...[['client','صاحب شركة'],['office','محاسب / مكتب محاسبة']].map(([v,t])=>h('button',{type:'button',class:'chip'+(kind===v?' on':''),'aria-pressed':kind===v,onclick:()=>{kind=v;dk()}},t)));dk();
+      const dm=()=>mk.replaceChildren(...[['eg','مصر'],['sa','السعودية']].map(([v,t])=>h('button',{type:'button',class:'chip'+(market===v?' on':''),'aria-pressed':market===v,onclick:()=>{market=v;dm()}},t)));dm();
+      kids.push(field('إنت مين؟',kc),field('اسمك',name,1),field('اسم الشركة',company),field('شركتك فين؟',mk))}
+    kids.push(field('رقم الموبايل',phone,1));
+    if(mode==='setup'){code=inp({class:'ltr',placeholder:'0000-0000'});kids.push(field('كود التفعيل',code,1))}
+    kids.push(field(mode==='login'?'الرقم السري':'اختار رقم سري (6 أرقام)',pin,1));
+    const go=h('button',{class:'btn block mt',style:'margin-top:18px'},mode==='login'?'دخول':mode==='signup'?'سجّل حسابي':'فعّل حسابي');
+    go.onclick=()=>run(go,async()=>{
+      const d={phone:phone.value,pin:pin.value};
+      if(mode==='signup')Object.assign(d,{name:name.value,company:company.value,kind,market});
+      if(mode==='setup')d.code=code.value.trim();
+      const r=await api(mode==='login'?'login':mode==='signup'?'signup':'setup_pin',d);
+      S.token=r.token;store('bk_token',r.token);S.user=null;S.tab='home';render()});
+    kids.push(go);
+    kids.push(h('p',{class:'sm muted center mb0'},mode==='setup'?h('a',{href:'#',onclick:e=>{e.preventDefault();mode='login';draw()}},'رجوع للدخول'):
+      ['نسيت الرقم السري؟ ',h('a',{href:'https://wa.me/'+WA,target:'_blank',rel:'noopener'},'كلّمنا على الواتساب'),' · ',h('a',{href:'#',onclick:e=>{e.preventDefault();mode='setup';draw()}},'معايا كود تفعيل')]));
+    box.replaceChildren(...kids.flat(Infinity))};
+  draw();
+  return h('div',{class:'auth'},h('div',{class:'logo'},h('span',{html:LOGO}).firstChild,h('h1',{class:'h'},'باشكاتب'),h('div',{style:'color:#B9CCEB'},'دفاترك في إيدك')),box)}
+
+/* ---------- onboarding ---------- */
+async function viewOnboarding(c,seq){
+  $app.replaceChildren(top(c.company_name||'تسجيل شركة جديدة','خطوات التسجيل',h('div',{class:'row'},clientSwitcher(),h('button',{class:'iconbtn',onclick:logout},'خروج'))),page(loading()));
+  let d;try{d=await api('onboarding_get',{client_id:c.id})}catch(e){toast(e.message,true);return}
+  if(seq!==renderSeq)return;
+  const cl=d.client;const f=Object.assign({},cl.form);if(!f.company_name)f.company_name=cl.company_name||'';
+  const st={step:S.obStep||1,plan:cl.plan,market:cl.market,own:cl.own_books,kyc:{}};
+  for(const k of d.kyc)st.kyc[k.kind]=k.file_paths;
+  const office=cl.plan==='office';
+  const main=page();$app.replaceChildren($app.firstChild,main);
+  const save=()=>api('onboarding_save',{client_id:c.id,form:f,plan:st.plan,own_books:st.own,market:st.market});
+  const nav=(next,label)=>{const b=h('button',{class:'btn grow'},label||'التالي');b.onclick=()=>run(b,async()=>{await next();window.scrollTo(0,0)});
+    return h('div',{class:'row mt'},st.step>1?h('button',{class:'btn ghost',onclick:()=>{st.step--;S.obStep=st.step;draw()}},'السابق'):null,b)};
+  const goto=(n)=>{st.step=n;S.obStep=n;draw()};
+  function draw(){
+    const head=[h('div',{class:'steps','aria-hidden':'true'},[1,2,3,4].map(i=>h('i',{class:i<=st.step?'on':''}))),h('p',{class:'sm muted',style:'margin:0 0 10px'},'خطوة ',num(st.step),' من ',num(4))];
+    if(st.step===1){
+      const card=h('div',{class:'card'},h('h3',null,'بيانات الشركة'));
+      for(const [k,label,req,extra] of FORM){let el;
+        if(Array.isArray(extra))el=sel([['','اختار']].concat(extra.map(x=>[x,x])),f[k]||'');
+        else el=inp({type:extra==='month'?'month':'text',class:extra==='ltr'?'ltr':'',value:f[k]||'',inputmode:k==='employees'?'numeric':null});
+        el.onchange=el.oninput=()=>{f[k]=el.value};card.append(...field(label,el,req))}
+      main.replaceChildren(...head,card,nav(async()=>{for(const [k,label,req] of FORM)if(req&&!(f[k]||'').trim())throw new Error('اكتب '+label);await save();c.company_name=f.company_name;goto(2)}))}
+    if(st.step===2){
+      const card=h('div',{class:'card'},h('h3',null,'ورق الشركة'),h('p',{class:'sm muted',style:'margin-top:0'},'صوّر كل ورقة أو ارفعها PDF. لو مش معاك دلوقتي، كمّل وابعتها بعدين.'));
+      for(const k of ['kyc_cr','kyc_tax','kyc_id']){
+        const row=h('div',{class:'item'});
+        const paint=()=>{const have=st.kyc[k];const fi=h('input',{type:'file',accept:'image/*,application/pdf',multiple:true,hidden:true});
+          const b=h('button',{class:'btn sm '+(have?'ghost':'tq')},have?'غيّرها':'ارفع');
+          b.onclick=()=>fi.click();
+          fi.onchange=()=>run(b,async()=>{const paths=[];for(const file of fi.files)paths.push(await upload(c.id,file));if(!paths.length)return;await api('doc_create',{client_id:c.id,kind:k,paths});st.kyc[k]=paths;paint();toast('اترفعت')});
+          row.replaceChildren(h('div',{class:'row sp'},h('div',null,h('b',null,KIND[k]),h('div',{class:'sm '+(have?'':'muted')},have?h('span',{class:'pill ok'},'اترفعت'):'لسه')),fi,b))};
+        paint();card.append(row)}
+      main.replaceChildren(...head,card,nav(async()=>goto(3)))}
+    if(st.step===3){
+      const kids=[...head];
+      if(!office){
+        const pc=h('div',{class:'card'},h('h3',null,'اختار باقتك'));
+        const plans=st.market==='sa'?[['sa','باقة السعودية','من 100$ في الشهر','مسك الدفاتر من 100$ شهرياً. خدمة الضرائب (الزكاة، ضريبة القيمة المضافة، هيئة الزكاة والضريبة والجمارك) إضافة من 100$ حسب حجم الشركة. بنبعت لك عرض سعر بعد مراجعة بياناتك.']]:
+          [['start','بداية','3,000 ج في الشهر','لحد 50 مستند في الشهر: تسجيل الفواتير والمصاريف، مطابقة البنك، وتقرير شهري.'],['growth','نمو','5,000 ج في الشهر','لحد 100 مستند، ومعاها تجهيز فواتير عملائك وأوامر الشراء والبيع وحسابات المشاريع ومتابعة المديونيات.'],['company','شركة','عرض سعر','أكتر من 100 مستند في الشهر أو 3 حسابات بنكية أو أكتر.']];
+        if(st.market==='sa'&&st.plan!=='sa')st.plan='sa';
+        const pd=h('div');const dp=()=>pd.replaceChildren(...plans.map(([v,t,p,desc])=>h('button',{type:'button',class:'plan'+(st.plan===v?' on':''),'aria-pressed':st.plan===v,onclick:()=>{st.plan=v;dp()}},h('div',{class:'row sp'},h('b',null,t),h('span',{class:'p'},p)),h('div',{class:'sm muted'},desc))));dp();
+        pc.append(pd);if(st.market==='eg')pc.append(h('p',{class:'sm muted mb0'},'لو عدّيت حد الباقة في شهر، المستند الزيادة بـ 50 ج، ومن الشهر اللي بعده بتتنقل للباقة الأعلى.'));
+        kids.push(pc)}
+      else kids.push(h('div',{class:'card'},h('h3',null,'تسعير مكاتب المحاسبة'),h('p',{class:'mb0'},'السعر بعرض سعر خاص حسب عدد الشركات اللي بتديرها. كمّل بيانات الشركة دي وهنتواصل معاك بالعرض.')));
+      const card=h('div',{class:'card'},h('h3',null,'شغلك ماشي إزاي'));
+      const dm=inp({class:'ltr',inputmode:'numeric',value:f.docs_month||''});dm.oninput=()=>f.docs_month=dm.value;
+      const bk=inp({value:f.banks||'',placeholder:'مثلاً: CIB، البنك الأهلي'});bk.oninput=()=>f.banks=bk.value;
+      const sw=sel([['','اختار'],'Zoho Books','وفيق (Wafeq)','دفترة (Daftra)','Odoo','QuickBooks','قيود','برنامج تاني','بشتغل على إكسيل','مفيش برنامج'],f.software||'');
+      const ownNote=h('div');
+      const dn=()=>{st.own=['مفيش برنامج','بشتغل على إكسيل'].includes(f.software);ownNote.replaceChildren(st.own?h('div',{class:'note'},'هنمسك دفاترك على نظام باشكاتب',st.market==='eg'?[' مقابل ',num('1,250'),' ج في الشهر فوق سعر الباقة،']:'،',' وبتستلم تقرير شهري ونسخة إكسيل.'):'')};
+      sw.onchange=()=>{f.software=sw.value;dn()};dn();
+      card.append(...field('تقريباً كام مستند في الشهر؟',dm),...field('البنوك اللي بتتعامل معاها',bk),...field('البرنامج المحاسبي',sw),ownNote);
+      if(st.market==='sa'){const tx=sel([['','اختار'],'عايز خدمة الضرائب (زكاة وقيمة مضافة)','مسك دفاتر بس'],f.sa_tax||'');tx.onchange=()=>f.sa_tax=tx.value;card.append(...field('خدمة الضرائب',tx))}
+      kids.push(card,nav(async()=>{if(!st.plan)throw new Error('اختار الباقة');if(!f.software)throw new Error('اختار البرنامج المحاسبي');await save();goto(4)}));
+      main.replaceChildren(...kids)}
+    if(st.step===4){
+      const card=h('div',{class:'card'},h('h3',null,'الموافقة والتوقيع'));
+      card.append(h('table',{class:'kv'},h('tr',null,h('td',null,'الشركة'),h('td',null,f.company_name)),h('tr',null,h('td',null,'الباقة'),h('td',null,PLAN[st.plan]||'')),st.own?h('tr',null,h('td',null,'الدفاتر'),h('td',null,'على نظام باشكاتب')):null));
+      const acc=h('input',{type:'checkbox',id:'acc',style:'width:22px;height:22px;flex:none'});
+      card.append(h('div',{class:'row',style:'margin-top:14px;align-items:flex-start'},acc,h('label',{for:'acc',style:'margin:0;font-weight:400'},'قريت ',h('a',{href:'/terms.html',target:'_blank',rel:'noopener'},'شروط الخدمة وعقد الاشتراك'),' و',h('a',{href:'/privacy.html',target:'_blank',rel:'noopener'},'سياسة البيانات'),' وموافق عليهم.')));
+      const signer=inp({value:f.owner_name||'',autocomplete:'name'});card.append(...field('اسم الموقّع',signer,1));
+      const cv=h('canvas',{class:'sig','aria-label':'مربع التوقيع'});let drawn=false;
+      card.append(h('label',null,'ارسم توقيعك هنا',h('i',null,' *')),cv,h('div',{class:'row sp mt'},h('span',{class:'sm muted'},'بنسجّل الموافقة بتاريخها ووقتها.'),h('button',{type:'button',class:'btn ghost sm',onclick:()=>{const x=cv.getContext('2d');x.clearRect(0,0,cv.width,cv.height);drawn=false}},'امسح')));
+      const sub=nav(async()=>{if(!acc.checked)throw new Error('وافق على الشروط الأول');if(signer.value.trim().length<3)throw new Error('اكتب اسم الموقّع');if(!drawn)throw new Error('ارسم توقيعك في المربع');
+        await api('onboarding_submit',{client_id:c.id,accept:true,signer_name:signer.value,signature:cv.toDataURL('image/png')});S.obStep=1;S.user=null;S.tab='home';render()},'ابعت للتفعيل');
+      main.replaceChildren(...head,card,sub);
+      const r=cv.getBoundingClientRect(),dpr=Math.min(2,window.devicePixelRatio||1);cv.width=Math.max(300,r.width)*dpr;cv.height=170*dpr;const x=cv.getContext('2d');x.scale(dpr,dpr);x.lineWidth=2.4;x.lineCap='round';x.lineJoin='round';x.strokeStyle='#0A2D6B';
+      let on=false;const pos=e=>{const b=cv.getBoundingClientRect();return [e.clientX-b.left,e.clientY-b.top]};
+      cv.onpointerdown=e=>{on=true;cv.setPointerCapture(e.pointerId);x.beginPath();x.moveTo(...pos(e))};
+      cv.onpointermove=e=>{if(!on)return;x.lineTo(...pos(e));x.stroke();drawn=true};
+      cv.onpointerup=cv.onpointercancel=()=>{on=false}}}
+  draw()}
+
+/* ---------- client app ---------- */
+function clientApp(c,seq){
+  const d=S.data;
+  const bar=()=>tabsBar([['home','الرئيسية','home'],['docs','المستندات','docs'],['questions','الأسئلة','q',d.home&&d.home.open_questions||0],['requests','الطلبات','req'],['account','حسابي','me']]);
+  const main=page(loading());
+  $app.replaceChildren(top(c.company_name||'باشكاتب',S.user.name,clientSwitcher()),main,bar());
+  const fresh=()=>seq===renderSeq;
+  const load=async(key,action,extra)=>{const r=await api(action,Object.assign({client_id:c.id},extra||{}));d[key]=r;return r};
+  const fail=(e)=>{if(fresh())main.replaceChildren(h('div',{class:'empty'},e.message,h('br'),h('button',{class:'btn mt',onclick:render},'جرّب تاني')))};
+  const pending=c.status==='pending_review',paused=c.status==='paused';
+  const V={
+    async home(){const r=await load('home','home');if(!fresh())return;const cl=r.client;const k=[];
+      if(pending)k.push(h('div',{class:'card'},h('h3',null,'بياناتك وصلت'),h('p',{class:'mb0'},'الفريق بيراجع بيانات شركتك دلوقتي. أول ما حسابك يتفعّل هتلاقي زر رفع المستندات هنا.')));
+      if(paused)k.push(h('div',{class:'note bad',style:'margin:0 0 12px'},'الخدمة موقوفة مؤقتاً. كلّمنا على الواتساب عشان نرجّعها.'));
+      if(r.notes.length)k.push(h('div',{class:'card'},h('div',{class:'row sp'},h('h3',{class:'mb0'},'جديد'),h('button',{class:'btn ghost sm',onclick:async(e)=>run(e.currentTarget,async()=>{await api('notes_read',{client_id:c.id});render()})},'تمام، شفتهم')),r.notes.map(n=>h('div',{class:'item',style:'cursor:pointer',onclick:()=>{if(n.tab&&V[n.tab]){S.tab=n.tab;render()}}},n.text,h('div',{class:'sm muted'},dtt(n.created_at))))));
+      if(r.bill)k.push(h('div',{class:'note warn',style:'margin:0 0 12px;cursor:pointer',onclick:()=>{S.tab='account';render()}},'اشتراك ',perName(r.bill.period),': ',money(r.bill.amount,r.bill.currency),r.bill.status==='proof_sent'?' · إثبات السداد بيتراجع':' · مستني السداد'));
+      if(!pending){
+        const lim=cl.doc_limit,over=lim&&r.used>lim;
+        k.push(h('div',{class:'card'},h('div',{class:'row sp'},h('h3',{class:'mb0'},'مستندات ',perName(r.period)),cl.plan?h('span',{class:'pill'},'باقة ',PLAN[cl.plan]):null),
+          h('div',{class:'big-n',style:'margin-top:8px'},num(r.used),lim?[h('span',{class:'muted',style:'font-size:18px'},' من '),num(lim)]:null),
+          lim?h('div',{class:'meter'+(over?' over':''),role:'progressbar','aria-valuenow':r.used,'aria-valuemin':0,'aria-valuemax':lim},h('b',{style:'width:'+Math.min(100,Math.round(r.used/lim*100))+'%'})):h('div',{class:'sm muted'},'باقتك بعرض سعر خاص'),
+          lim?h('div',{class:'sm '+(over?'':'muted')},over?['عدّيت الحد بـ ',num(r.used-lim),' مستند',cl.market==='eg'?[' × ',num(50),' ج = ',money((r.used-lim)*50)]:'','. من الشهر الجاي هتتنقل للباقة الأعلى.']:['فاضل ',num(lim-r.used),' مستند في باقتك الشهر ده. كشف البنك مش محسوب.']):null));
+        if(!paused)k.push(h('button',{class:'btn tq big block',style:'margin-bottom:12px',onclick:()=>docSheet(c,()=>{S.data={};render()})},'ارفع مستند'));
+        if(r.open_questions)k.push(h('div',{class:'card',style:'cursor:pointer',onclick:()=>{S.tab='questions';render()}},h('div',{class:'row sp'},h('div',null,h('b',null,'المحاسب مستني ردّك'),h('div',{class:'sm muted'},num(r.open_questions),' سؤال مفتوح')),h('span',{class:'btn sm'},'ردّ'))));
+        const s=cl.snapshot;
+        k.push(h('div',{class:'card'},h('h3',null,'أرقامك'),s&&(s.bank!=null||s.receivable!=null||s.payable!=null)?[h('div',{class:'kpis'},h('div',{class:'kpi'},h('b',null,s.bank==null?'—':num(fmt(s.bank))),h('span',null,'رصيد البنك')),h('div',{class:'kpi'},h('b',null,s.receivable==null?'—':num(fmt(s.receivable))),h('span',null,'ليك عند عملائك')),h('div',{class:'kpi'},h('b',null,s.payable==null?'—':num(fmt(s.payable))),h('span',null,'عليك لموردينك'))),h('div',{class:'sm muted mt'},'بالـ',({EGP:'جنيه',SAR:'ريال',USD:'دولار'})[s.currency]||s.currency,s.as_of?[' · لحد ',dt(s.as_of)]:'')]:h('p',{class:'muted mb0'},'رصيد البنك واللي ليك واللي عليك هيظهروا هنا بعد ما المحاسب يقفل أول فترة.')));
+        if(r.recent.length)k.push(h('div',{class:'card'},h('h3',null,'آخر المستندات'),r.recent.map(x=>docRow(x))))}
+      k.push(installCard());
+      main.replaceChildren(...k.filter(Boolean));$app.lastChild.replaceWith(bar())},
+    async docs(){const per=S.docPer||'';const r=await load('docs','docs_list',{period:per});if(!fresh())return;
+      const months=[['','كل الشهور']];const now=new Date();for(let i=0;i<6;i++){const x=new Date(now.getFullYear(),now.getMonth()-i,1);const p=x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0');months.push([p,perName(p)])}
+      const s=sel(months,per,{'aria-label':'الشهر'});s.onchange=()=>{S.docPer=s.value;render()};
+      main.replaceChildren(...[c.status==='active'?h('button',{class:'btn tq big block',style:'margin-bottom:12px',onclick:()=>docSheet(c,()=>{S.data={};render()})},'ارفع مستند'):null,s,
+        h('div',{class:'card mt'},r.docs.length?r.docs.map(x=>docRow(x,true)):h('div',{class:'empty'},'لسه مفيش مستندات هنا.'))].filter(Boolean))},
+    async questions(){const r=await load('qs','questions_list');if(!fresh())return;
+      const open=r.questions.filter(x=>x.status==='open'),rest=r.questions.filter(x=>x.status!=='open');
+      const k=[];
+      if(!r.questions.length)k.push(h('div',{class:'card'},h('div',{class:'empty'},'مفيش أسئلة. لما المحاسب يحتاج منك حاجة هتلاقيها هنا.')));
+      for(const x of open){const ta=h('textarea',{placeholder:'اكتب ردّك','aria-label':'ردّك'});const fp=filePicker({max:1});const b=h('button',{class:'btn block mt'},'ابعت الرد');
+        b.onclick=()=>run(b,async()=>{let p=null;if(fp.files[0])p=await upload(c.id,fp.files[0]);await api('question_answer',{client_id:c.id,id:x.id,answer:ta.value,answer_path:p});toast('ردّك وصل');S.data={};render()});
+        k.push(h('div',{class:'card'},h('span',{class:'pill warn'},'مستني ردّك'),h('h3',{style:'margin-top:8px'},x.title),x.body?h('p',{style:'margin-top:0;white-space:pre-wrap'},x.body):null,h('div',{class:'sm muted'},dtt(x.asked_at)),ta,h('div',{class:'mt'},fp.el),b))}
+      if(rest.length)k.push(h('div',{class:'card'},h('h3',null,'اللي اترد عليه'),rest.map(x=>h('div',{class:'item'},h('div',{class:'row sp'},h('b',null,x.title),h('span',{class:'pill '+(x.status==='closed'?'ok':'')},x.status==='closed'?'اتقفل':'ردّك وصل')),x.answer?h('div',{class:'sm',style:'white-space:pre-wrap'},x.answer):null,x.answer_path?h('button',{class:'btn ghost sm mt',onclick:()=>openFile(c.id,x.answer_path)},'الملف المرفق'):null,h('div',{class:'sm muted'},dtt(x.answered_at))))));
+      main.replaceChildren(...k)},
+    async requests(){const r=await load('rq','requests_list');if(!fresh())return;const locked=c.plan==='start';
+      const k=[];
+      if(c.status==='active')k.push(h('div',{class:'card'},h('h3',null,'اطلب من المحاسب'),h('div',{class:'chips'},['invoice','quote','po','so','copy','other'].map(t=>{const lk=locked&&['invoice','quote','po','so'].includes(t);return h('button',{class:'chip',onclick:()=>lk?toast('الخدمة دي متاحة من باقة «نمو»',true):reqSheet(c,t,()=>{S.data={};render()})},RTYPE[t],lk?' (نمو)':'')})),locked?h('p',{class:'sm muted mb0'},'تجهيز الفواتير وعروض الأسعار وأوامر الشراء والبيع متاح من باقة «نمو».'):null));
+      k.push(h('div',{class:'card'},h('h3',null,'طلباتك'),r.requests.length?r.requests.map(x=>h('div',{class:'item'},h('div',{class:'row sp'},h('b',null,RTYPE[x.type],x.payload.party?' · '+x.payload.party:''),h('span',{class:'pill '+(x.status==='done'?'ok':x.status==='rejected'?'bad':'')},RSTAT[x.status])),x.payload.ref?h('div',{class:'sm'},'المرجع: ',x.payload.ref):null,x.staff_note?h('div',{class:'note'},x.staff_note):null,h('div',{class:'row sp mt'},h('span',{class:'sm muted'},dtt(x.created_at)),x.result_path?h('button',{class:'btn sm',onclick:()=>openFile(c.id,x.result_path)},'نزّل الملف'):null))):h('div',{class:'empty'},'لسه ما طلبتش حاجة.')));
+      main.replaceChildren(...k)},
+    async account(){const [p,b,rep]=await Promise.all([load('prof','profile'),load('bills','bills_list'),load('reps','reports_list')]);if(!fresh())return;const cl=p.client;
+      const k=[];
+      k.push(h('div',{class:'card'},h('h3',null,'الاشتراك'),h('table',{class:'kv'},h('tr',null,h('td',null,'الباقة'),h('td',null,PLAN[cl.plan]||'—')),h('tr',null,h('td',null,'حد المستندات'),h('td',null,cl.doc_limit?[num(cl.doc_limit),' في الشهر']:'بعرض سعر')),cl.own_books?h('tr',null,h('td',null,'الدفاتر'),h('td',null,'على نظام باشكاتب')):null,h('tr',null,h('td',null,'الحالة'),h('td',null,CSTAT[cl.status]))),
+        b.bills.length?h('div',{class:'mt'},b.bills.map(x=>{const fi=h('input',{type:'file',accept:'image/*,application/pdf',hidden:true});const ub=h('button',{class:'btn sm'},x.status==='proof_sent'?'غيّر الإثبات':'ارفع إثبات التحويل');ub.onclick=()=>fi.click();
+          fi.onchange=()=>run(ub,async()=>{if(!fi.files[0])return;const path=await upload(c.id,fi.files[0]);await api('bill_proof',{client_id:c.id,id:x.id,path});toast('الإثبات وصل');S.data={};render()});
+          return h('div',{class:'item'},h('div',{class:'row sp'},h('b',null,perName(x.period)),h('span',{class:'pill '+(x.status==='paid'?'ok':x.status==='proof_sent'?'':'warn')},x.status==='paid'?'مدفوع':x.status==='proof_sent'?'الإثبات بيتراجع':'مستني السداد')),h('div',null,money(x.amount,x.currency),x.extra_docs?[' · منهم ',num(x.extra_docs),' مستند زيادة']:''),x.note?h('div',{class:'note',style:'white-space:pre-wrap'},x.note):null,x.status!=='paid'?h('div',{class:'mt'},fi,ub):null)})):h('p',{class:'sm muted mb0 mt'},'لسه مفيش فواتير اشتراك.')));
+      k.push(h('div',{class:'card'},h('h3',null,'التقارير'),rep.reports.length?rep.reports.map(x=>h('div',{class:'item row sp'},h('div',null,h('b',null,x.title),h('div',{class:'sm muted'},perName(x.period))),h('button',{class:'btn sm',onclick:()=>openFile(c.id,x.file_path)},'نزّل'))):h('p',{class:'muted mb0'},'التقرير الشهري ونسخة الإكسيل هينزلوا هنا بعد كل إقفال.')));
+      k.push(h('div',{class:'card'},h('h3',null,'بيانات الشركة'),h('table',{class:'kv'},FORM.map(([key,label])=>cl.form[key]?h('tr',null,h('td',null,label),h('td',null,cl.form[key])):null),cl.terms_accepted_at?h('tr',null,h('td',null,'الموافقة على الشروط'),h('td',null,dtt(cl.terms_accepted_at),' · ',cl.signer_name)):null),h('p',{class:'sm muted mb0 mt'},'عايز تعدّل حاجة؟ كلّمنا على الواتساب.')));
+      k.push(installCard(true));
+      k.push(h('div',{class:'card'},h('a',{class:'btn ghost block',href:'https://wa.me/'+WA,target:'_blank',rel:'noopener'},'كلّمنا على الواتساب'),h('a',{class:'btn ghost block mt',href:'/terms.html',target:'_blank',rel:'noopener'},'شروط الخدمة'),h('button',{class:'btn bad block mt',onclick:logout},'تسجيل خروج')));
+      main.replaceChildren(...k.filter(Boolean))}};
+  function docRow(x,full){const st=x.status,i=['received','reviewed','posted'].indexOf(st);
+    return h('div',{class:'item'},h('div',{class:'row sp'},h('b',null,KIND[x.kind]||x.kind),h('span',{class:'pill '+(st==='posted'?'ok':st==='returned'?'bad':'')},DSTAT[st])),
+      x.note?h('div',{class:'sm'},x.note):null,
+      st==='returned'?h('div',{class:'note bad'},x.staff_note||'محتاج يتبعت تاني'):h('div',{class:'track','aria-hidden':'true'},[0,1,2].map(n=>h('i',{class:n<=i?'on':''}))),
+      h('div',{class:'row sp mt'},h('span',{class:'sm muted'},dtt(x.created_at),full&&!x.counted?' · مش محسوب في الباقة':''),full&&x.file_paths?h('div',{class:'row'},x.voice_path?h('button',{class:'btn ghost sm',onclick:()=>openFile(c.id,x.voice_path)},'الفويس'):null,x.file_paths.map((p,n)=>h('button',{class:'btn ghost sm',onclick:()=>openFile(c.id,p)},x.file_paths.length>1?['صفحة ',num(n+1)]:'افتح'))):null))}
+  V[S.tab]().catch(fail)}
+function installCard(always){
+  const standalone=window.matchMedia('(display-mode: standalone)').matches||navigator.standalone;if(standalone)return null;
+  const ios=/iphone|ipad|ipod/i.test(navigator.userAgent);
+  if(S.installEvt)return h('div',{class:'card'},h('h3',null,'خلّي باشكاتب على شاشة موبايلك'),h('button',{class:'btn block',onclick:async()=>{S.installEvt.prompt();await S.installEvt.userChoice;S.installEvt=null;render()}},'ضيف التطبيق'));
+  if(ios||always)return h('div',{class:'card'},h('h3',null,'خلّي باشكاتب على شاشة موبايلك'),h('p',{class:'sm muted mb0'},ios?'افتح الصفحة من Safari، اضغط زر المشاركة، واختار «إضافة إلى الشاشة الرئيسية».':'من قايمة المتصفح اختار «إضافة إلى الشاشة الرئيسية» أو «تثبيت التطبيق».'));
+  return null}
+function docSheet(c,done){modal((sh,close)=>{
+  let kind='purchase';const chips=h('div',{class:'chips'});
+  const dk=()=>chips.replaceChildren(...['purchase','sale','expense','bank','other'].map(k=>h('button',{type:'button',class:'chip'+(kind===k?' on':''),'aria-pressed':kind===k,onclick:()=>{kind=k;dk()}},KIND[k])));dk();
+  const fp=filePicker({max:20});const ta=h('textarea',{placeholder:'مثلاً: دي فاتورة إيجار شهر نوفمبر، اتدفعت كاش','aria-label':'ملاحظة'});const rec=recorder();
+  const b=h('button',{class:'btn block',style:'margin-top:16px'},'ابعت للمحاسب');
+  b.onclick=()=>run(b,async()=>{if(!fp.files.length)throw new Error('صوّر المستند أو اختار ملف');
+    b.textContent='بيرفع...';try{const paths=[];for(const f of fp.files)paths.push(await upload(c.id,f));let vp=null;if(rec.blob)vp=await upload(c.id,rec.blob);
+      await api('doc_create',{client_id:c.id,kind,paths,note:ta.value,voice_path:vp})}finally{b.textContent='ابعت للمحاسب'}
+    close();toast('المستند وصل');done()});
+  sh.append(h('h3',{class:'h',style:'font-size:20px;margin:4px 0 12px'},'ارفع مستند'),h('label',{style:'margin-top:0'},'نوع المستند'),chips,h('label',null,'صورة أو ملف المستند (لو كذا صفحة ضيفهم كلهم)'),fp.el,h('label',null,'ملاحظة للمحاسب (اختياري)'),ta,rec.el,b)})}
+function reqSheet(c,type,done){modal((sh,close)=>{
+  const doc=['invoice','quote','po','so'].includes(type);const p={lines:[]};
+  const party=inp({}),date=inp({type:'date'}),ref=inp({}),det=h('textarea',{}),tax=sel(['بدون ضريبة','14% قيمة مضافة','15% قيمة مضافة','المحاسب يحدد'],'المحاسب يحدد');
+  const lines=h('div',{class:'lines'});const tot=h('b',{class:'n'},'0');
+  const calc=()=>{tot.textContent=fmt(p.lines.reduce((s,l)=>s+(Number(l.qty)||0)*(Number(l.price)||0),0))};
+  const dl=()=>{lines.replaceChildren(...p.lines.map((l,i)=>{const d=inp({placeholder:'البند',value:l.desc,'aria-label':'البند'}),q=inp({class:'ltr',inputmode:'decimal',placeholder:'كمية',value:l.qty,'aria-label':'الكمية'}),pr=inp({class:'ltr',inputmode:'decimal',placeholder:'سعر',value:l.price,'aria-label':'السعر'});
+    d.oninput=()=>l.desc=d.value;q.oninput=()=>{l.qty=q.value;calc()};pr.oninput=()=>{l.price=pr.value;calc()};
+    return h('div',{class:'ln'},d,q,pr,h('button',{type:'button','aria-label':'شيل البند',onclick:()=>{p.lines.splice(i,1);dl()}},'×'))}));calc()};
+  const fp=filePicker({max:1});
+  const b=h('button',{class:'btn block',style:'margin-top:16px'},'ابعت الطلب');
+  b.onclick=()=>run(b,async()=>{
+    if(doc&&!party.value.trim())throw new Error(type==='po'?'اكتب اسم المورد':'اكتب اسم العميل');
+    if(doc&&!p.lines.some(l=>l.desc.trim()))throw new Error('ضيف بند واحد على الأقل');
+    if(!doc&&!ref.value.trim()&&!det.value.trim())throw new Error('اكتب تفاصيل الطلب');
+    let attach=null;if(fp.files[0])attach=await upload(c.id,fp.files[0]);
+    await api('request_create',{client_id:c.id,type,payload:{party:party.value,date:date.value,ref:ref.value,details:det.value,tax:doc?tax.value:'',lines:p.lines,attach}});
+    close();toast('طلبك وصل');done()});
+  sh.append(h('h3',{class:'h',style:'font-size:20px;margin:4px 0 4px'},RTYPE[type]));
+  if(doc){p.lines.push({desc:'',qty:'1',price:''});dl();
+    sh.append(...field(type==='po'?'اسم المورد':'اسم العميل',party,1),...field('التاريخ',date),h('label',null,'البنود',h('i',null,' *')),lines,h('div',{class:'row sp'},h('button',{type:'button',class:'btn ghost sm',onclick:()=>{p.lines.push({desc:'',qty:'1',price:''});dl()}},'+ بند'),h('span',null,'الإجمالي قبل الضريبة: ',tot)),...field('الضريبة',tax),...field('ملاحظات (شروط الدفع، مدة العرض...)',det))}
+  else if(type==='copy')sh.append(...field('رقم المستند أو اسم المورد/العميل',ref,1),...field('تفاصيل تساعدنا نلاقيه (الشهر، المبلغ...)',det));
+  else sh.append(...field('تفاصيل الطلب',det,1));
+  sh.append(h('label',null,'ملف مرفق (اختياري)'),fp.el,b)})}
+
+/* ---------- staff app ---------- */
+async function staffApp(seq){
+  const admin=S.user.role==='admin';
+  const main=page(loading());
+  const bar=(o)=>tabsBar([['queue','المراجعة','rev',o&&o.docs.filter(d=>d.status==='received').length||0],['follow','متابعة','q',o&&(o.questions.filter(q=>q.status==='answered').length+o.requests.length+o.clients.filter(c=>c.status==='pending_review').length+o.bills.filter(b=>b.status==='proof_sent').length)||0],['clients','العملاء','cl']]);
+  $app.replaceChildren(top('باشكاتب · الفريق',S.user.name+(admin?' · إدارة':' · محاسب'),h('button',{class:'iconbtn',onclick:logout},'خروج')),main,bar());
+  let o;try{o=await api('staff_overview')}catch(e){main.replaceChildren(h('div',{class:'empty'},e.message,h('br'),h('button',{class:'btn mt',onclick:render},'جرّب تاني')));return}
+  if(seq!==renderSeq)return;$app.lastChild.replaceWith(bar(o));
+  const cn=(id)=>{const c=o.clients.find(x=>x.id===id);return c?(c.company_name||'شركة بدون اسم'):'—'};
+  const refresh=()=>render();
+  if(S.sub){return staffClient(o,S.sub,main,admin,refresh)}
+  if(S.tab==='queue'){
+    const k=[];
+    if(o.notes.length)k.push(h('div',{class:'card'},h('div',{class:'row sp'},h('h3',{class:'mb0'},'جديد'),h('button',{class:'btn ghost sm',onclick:e=>run(e.currentTarget,async()=>{await api('staff_notes_read');refresh()})},'شفتهم')),o.notes.map(n=>h('div',{class:'item'},n.text,h('div',{class:'sm muted'},dtt(n.created_at))))));
+    const rec=o.docs.filter(d=>d.status==='received'),rev=o.docs.filter(d=>d.status==='reviewed');
+    k.push(h('h2',{class:'h',style:'font-size:18px;margin:6px 0 10px'},'مستنية مراجعة (',num(rec.length),')'));
+    if(!rec.length)k.push(h('div',{class:'card'},h('div',{class:'empty'},'مفيش مستندات مستنية مراجعة.')));
+    rec.forEach(d=>k.push(staffDoc(d,cn(d.client_id),refresh,o)));
+    if(rev.length){k.push(h('h2',{class:'h',style:'font-size:18px;margin:16px 0 10px'},'اتراجعت ولسه ما اتسجلتش (',num(rev.length),')'));rev.forEach(d=>k.push(staffDoc(d,cn(d.client_id),refresh,o)))}
+    main.replaceChildren(...k)}
+  if(S.tab==='follow'){
+    const k=[];
+    const pend=o.clients.filter(c=>c.status==='pending_review');
+    if(pend.length)k.push(h('div',{class:'card'},h('h3',null,'عملاء مستنيين التفعيل'),pend.map(c=>h('div',{class:'item row sp'},h('div',null,h('b',null,c.company_name),h('div',{class:'sm muted'},PLAN[c.plan]||'',' · ',dtt(c.submitted_at))),h('button',{class:'btn sm',onclick:()=>{S.sub=c.id;render()}},'افتح')))));
+    const proofs=o.bills.filter(b=>b.status==='proof_sent');
+    if(proofs.length)k.push(h('div',{class:'card'},h('h3',null,'إثباتات سداد'),proofs.map(b=>h('div',{class:'item'},h('div',{class:'row sp'},h('b',null,cn(b.client_id)),h('span',null,perName(b.period),' · ',money(b.amount,b.currency))),h('div',{class:'row mt'},h('button',{class:'btn ghost sm',onclick:()=>openFile(b.client_id,b.proof_path)},'الإثبات'),admin?h('button',{class:'btn sm',onclick:e=>run(e.currentTarget,async()=>{await api('bill_paid',{id:b.id});toast('اتسجل مدفوع');refresh()})},'استلمنا الفلوس'):null)))));
+    const ans=o.questions.filter(q=>q.status==='answered'),opn=o.questions.filter(q=>q.status==='open');
+    k.push(h('div',{class:'card'},h('h3',null,'ردود العملاء (',num(ans.length),')'),ans.length?ans.map(q=>h('div',{class:'item'},h('div',{class:'sm muted'},cn(q.client_id)),h('b',null,q.title),q.answer?h('div',{class:'note',style:'white-space:pre-wrap'},q.answer):null,h('div',{class:'row mt wrap'},q.answer_path?h('button',{class:'btn ghost sm',onclick:()=>openFile(q.client_id,q.answer_path)},'المرفق'):null,h('button',{class:'btn sm',onclick:e=>run(e.currentTarget,async()=>{await api('question_close',{id:q.id});refresh()})},'تمام، اقفل'),h('button',{class:'btn ghost sm',onclick:e=>run(e.currentTarget,async()=>{await api('question_close',{id:q.id,reopen:true});refresh()})},'محتاج توضيح')))):h('p',{class:'muted mb0'},'مفيش ردود جديدة.')));
+    k.push(h('div',{class:'card'},h('h3',null,'طلبات العملاء (',num(o.requests.length),')'),o.requests.length?o.requests.map(r=>staffReq(r,cn(r.client_id),refresh)):h('p',{class:'muted mb0'},'مفيش طلبات مفتوحة.')));
+    if(opn.length)k.push(h('div',{class:'card'},h('h3',null,'أسئلة مستنية العميل (',num(opn.length),')'),opn.map(q=>h('div',{class:'item'},h('div',{class:'sm muted'},cn(q.client_id),' · ',dt(q.asked_at)),h('b',null,q.title)))));
+    main.replaceChildren(...k)}
+  if(S.tab==='clients'){
+    main.replaceChildren(h('div',{class:'card'},o.clients.length?o.clients.map(c=>{const nd=o.docs.filter(d=>d.client_id===c.id&&d.status==='received').length;
+      return h('div',{class:'item row sp',style:'cursor:pointer',onclick:()=>{S.sub=c.id;render()}},h('div',{class:'grow'},h('b',null,c.company_name||'شركة بدون اسم'),h('div',{class:'sm muted'},PLAN[c.plan]||'بدون باقة',c.market==='sa'?' · السعودية':'',nd?[' · ',num(nd),' مستند جديد']:'')),h('span',{class:'pill '+(c.status==='active'?'ok':c.status==='pending_review'?'warn':c.status==='paused'?'bad':'')},CSTAT[c.status]))}):h('div',{class:'empty'},'لسه مفيش عملاء سجّلوا.')))}}
+function staffDoc(d,name,refresh,o){
+  const ks=sel(['purchase','sale','expense','bank','other'].map(k=>[k,KIND[k]]),d.kind,{'aria-label':'نوع المستند',style:'max-width:170px;min-height:38px;padding:5px 8px'});
+  const act=(status,extra)=>(e)=>run(e.currentTarget,async()=>{await api('doc_review',Object.assign({id:d.id,status,kind:ks.value},extra||{}));refresh()});
+  return h('div',{class:'card'},h('div',{class:'row sp'},h('b',null,name),ks),d.note?h('div',{class:'note'},d.note):null,
+    h('div',{class:'row wrap mt'},d.file_paths.map((p,n)=>h('button',{class:'btn ghost sm',onclick:()=>openFile(d.client_id,p)},d.file_paths.length>1?['صفحة ',num(n+1)]:'افتح المستند')),d.voice_path?h('button',{class:'btn ghost sm',onclick:()=>openFile(d.client_id,d.voice_path)},'الفويس'):null),
+    h('div',{class:'sm muted mt'},dtt(d.created_at),' · ',DSTAT[d.status]),
+    h('div',{class:'row wrap mt'},d.status==='received'?h('button',{class:'btn sm',onclick:act('reviewed')},'راجعته'):null,h('button',{class:'btn tq sm',onclick:act('posted')},'اتسجل'),
+      h('button',{class:'btn bad sm',onclick:(e)=>{const n=prompt('سبب الإرجاع (هيظهر للعميل)');if(n)act('returned',{staff_note:n})(e)}},'رجّعه للعميل'),
+      h('button',{class:'btn ghost sm',onclick:()=>askSheet(d.client_id,d.id,refresh)},'اسأل العميل')))}
+function staffReq(r,name,refresh){const p=r.payload;
+  const fi=h('input',{type:'file',hidden:true,accept:'application/pdf,image/*,.xlsx,.xls,.csv'});const note=inp({placeholder:'ملاحظة للعميل (اختياري)','aria-label':'ملاحظة للعميل'});let path=null;const fl=h('span',{class:'sm muted'});
+  const ub=h('button',{class:'btn ghost sm'},'ارفع الملف الجاهز');ub.onclick=()=>fi.click();fi.onchange=()=>run(ub,async()=>{if(!fi.files[0])return;path=await upload(r.client_id,fi.files[0]);fl.textContent='الملف اترفع'});
+  const up=(status)=>(e)=>run(e.currentTarget,async()=>{if(status==='rejected'&&!note.value.trim())throw new Error('اكتب للعميل المطلوب منه');await api('request_update',{id:r.id,status,staff_note:note.value,result_path:path});refresh()});
+  return h('div',{class:'item'},h('div',{class:'row sp'},h('div',null,h('div',{class:'sm muted'},name,' · ',dtt(r.created_at)),h('b',null,RTYPE[r.type],p.party?' · '+p.party:'')),h('span',{class:'pill'},RSTAT[r.status])),
+    h('table',{class:'kv mt'},p.date?h('tr',null,h('td',null,'التاريخ'),h('td',null,num(p.date))):null,p.ref?h('tr',null,h('td',null,'المرجع'),h('td',null,p.ref)):null,p.tax?h('tr',null,h('td',null,'الضريبة'),h('td',null,p.tax)):null,
+      (p.lines||[]).map(l=>h('tr',null,h('td',null,l.desc),h('td',null,num(fmt(l.qty)),' × ',num(fmt(l.price)),' = ',num(fmt(l.qty*l.price))))),p.details?h('tr',null,h('td',null,'تفاصيل'),h('td',{style:'white-space:pre-wrap'},p.details)):null),
+    p.attach?h('button',{class:'btn ghost sm mt',onclick:()=>openFile(r.client_id,p.attach)},'مرفق العميل'):null,
+    h('div',{class:'mt'},note),h('div',{class:'row wrap mt'},fi,ub,fl),
+    h('div',{class:'row wrap mt'},r.status==='new'?h('button',{class:'btn ghost sm',onclick:up('in_progress')},'بدأت فيه'):null,h('button',{class:'btn sm',onclick:up('done')},'جاهز، ابعته'),h('button',{class:'btn bad sm',onclick:up('rejected')},'محتاج بيانات')))}
+function askSheet(cid,docId,done){modal((sh,close)=>{const t=inp({}),b=h('textarea',{});const go=h('button',{class:'btn block',style:'margin-top:16px'},'ابعت السؤال للعميل');
+  go.onclick=()=>run(go,async()=>{await api('question_ask',{client_id:cid,title:t.value,body:b.value,doc_id:docId});close();toast('السؤال اتبعت');done()});
+  sh.append(h('h3',{class:'h',style:'font-size:20px;margin:4px 0 4px'},'سؤال للعميل'),...field('السؤال',t,1),...field('تفاصيل (اختياري)',b),go)})}
+async function staffClient(o,cid,main,admin,refresh){
+  main.replaceChildren(loading());
+  let p,docs,qs,rq,bills,reps;
+  try{[p,docs,qs,rq,bills,reps]=await Promise.all(['profile','docs_list','questions_list','requests_list','bills_list','reports_list'].map(a=>api(a,{client_id:cid})))}catch(e){toast(e.message,true);S.sub=null;render();return}
+  const c=p.client;const k=[h('button',{class:'btn ghost sm',style:'margin-bottom:10px',onclick:()=>{S.sub=null;render()}},'→ رجوع')];
+  const upd=(d,msg)=>(e)=>run(e.currentTarget,async()=>{await api('client_update',Object.assign({client_id:cid},d));toast(msg||'اتحفظ');refresh()});
+  k.push(h('div',{class:'card'},h('div',{class:'row sp'},h('h3',{class:'mb0'},c.company_name||'شركة بدون اسم'),h('span',{class:'pill '+(c.status==='active'?'ok':c.status==='pending_review'?'warn':'')},CSTAT[c.status])),
+    h('table',{class:'kv mt'},h('tr',null,h('td',null,'الباقة'),h('td',null,PLAN[c.plan]||'—',c.own_books?' · دفاتر على نظامنا':'')),h('tr',null,h('td',null,'مستندات الشهر'),h('td',null,num(p.used),c.doc_limit?[' من ',num(c.doc_limit)]:'')),p.users.map(u=>h('tr',null,h('td',null,u.role==='office'?'مكتب محاسبة':'المستخدم'),h('td',null,u.name,' · ',num(u.phone)))),c.terms_accepted_at?h('tr',null,h('td',null,'وافق على الشروط'),h('td',null,dtt(c.terms_accepted_at),' · ',c.signer_name)):null),
+    h('div',{class:'row wrap mt'},c.signature_path?h('button',{class:'btn ghost sm',onclick:()=>openFile(cid,c.signature_path)},'التوقيع'):null,docs.docs.filter(d=>d.kind.startsWith('kyc_')).map(d=>h('button',{class:'btn ghost sm',onclick:()=>openFile(cid,d.file_paths[0])},KIND[d.kind])),h('button',{class:'btn ghost sm',onclick:()=>askSheet(cid,null,refresh)},'اسأل العميل')),
+    admin?h('div',{class:'row wrap mt'},c.status!=='active'?h('button',{class:'btn sm',onclick:upd({status:'active'},'الحساب اتفعّل')},'فعّل الحساب'):h('button',{class:'btn bad sm',onclick:upd({status:'paused'},'اتوقف')},'وقّف الخدمة'),c.status==='pending_review'?h('button',{class:'btn ghost sm',onclick:upd({status:'onboarding'},'رجع للعميل')},'رجّعه يعدّل بياناته'):null):h('p',{class:'sm muted mb0 mt'},'تفعيل الحساب وتغيير الباقة من صلاحيات الإدارة.')));
+  const det=(t,...body)=>h('details',null,h('summary',null,t),...body);
+  const box=h('div',{class:'card'});k.push(box);
+  box.append(det('بيانات التسجيل',h('table',{class:'kv'},FORM.concat(FORM2).map(([key,label])=>c.form[key]?h('tr',null,h('td',null,label),h('td',null,c.form[key])):null))));
+  if(admin){const ps=sel(Object.entries(PLAN),c.plan||'start'),lim=inp({class:'ltr',inputmode:'numeric',value:c.doc_limit||'',placeholder:'فاضي = بدون حد'});
+    box.append(det('الباقة والحد',...field('الباقة',ps),...field('حد المستندات في الشهر',lim),h('button',{class:'btn sm mt',onclick:(e)=>upd({plan:ps.value,doc_limit:lim.value===''?null:Number(lim.value)})(e)},'احفظ')))}
+  {const s=c.snapshot||{};const bk=inp({class:'ltr',inputmode:'decimal',value:s.bank??''}),ar=inp({class:'ltr',inputmode:'decimal',value:s.receivable??''}),ap=inp({class:'ltr',inputmode:'decimal',value:s.payable??''}),as=inp({type:'date',value:s.as_of||''}),cur=sel(['EGP','SAR','USD'],s.currency||(c.market==='sa'?'SAR':'EGP'));
+    box.append(det('أرقام لوحة العميل',...field('رصيد البنك',bk),...field('ليه عند عملائه',ar),...field('عليه لموردينه',ap),...field('لحد تاريخ',as),...field('العملة',cur),h('button',{class:'btn sm mt',onclick:e=>run(e.currentTarget,async()=>{await api('snapshot_set',{client_id:cid,snapshot:{bank:bk.value,receivable:ar.value,payable:ap.value,as_of:as.value,currency:cur.value}});toast('اتحفظ');refresh()})},'احفظ الأرقام')))}
+  {const t=inp({placeholder:'مثلاً: تقرير شهر أكتوبر'}),pr=inp({type:'month',value:o.period}),fi=h('input',{type:'file',accept:'application/pdf,.xlsx,.xls,.csv,image/*'});const b=h('button',{class:'btn sm mt'},'انشر التقرير للعميل');
+    b.onclick=()=>run(b,async()=>{if(!fi.files[0])throw new Error('اختار ملف التقرير');const path=await upload(cid,fi.files[0]);await api('report_add',{client_id:cid,title:t.value,period:pr.value,path});toast('التقرير اتنشر');refresh()});
+    box.append(det('التقارير ('+reps.reports.length+')',reps.reports.map(x=>h('div',{class:'item row sp'},h('span',null,x.title,' · ',perName(x.period)),h('button',{class:'btn ghost sm',onclick:()=>openFile(cid,x.file_path)},'افتح'))),...field('عنوان التقرير',t),...field('الشهر',pr),h('div',{class:'mt'},fi),b))}
+  {const pr=inp({type:'month',value:o.period}),am=inp({class:'ltr',inputmode:'decimal'}),ex=inp({class:'ltr',inputmode:'numeric',placeholder:'0'}),cur=sel(['EGP','SAR','USD'],c.market==='sa'?'USD':'EGP'),nt=h('textarea',{placeholder:'بيانات التحويل أو أي ملاحظة تظهر للعميل'});
+    box.append(det('فواتير الاشتراك ('+bills.bills.length+')',bills.bills.map(x=>h('div',{class:'item'},h('div',{class:'row sp'},h('span',null,perName(x.period),' · ',money(x.amount,x.currency)),h('span',{class:'pill '+(x.status==='paid'?'ok':'warn')},x.status==='paid'?'مدفوع':x.status==='proof_sent'?'إثبات اترفع':'مستني')),h('div',{class:'row mt'},x.proof_path?h('button',{class:'btn ghost sm',onclick:()=>openFile(cid,x.proof_path)},'الإثبات'):null,admin&&x.status!=='paid'?h('button',{class:'btn sm',onclick:e=>run(e.currentTarget,async()=>{await api('bill_paid',{id:x.id});refresh()})},'اتدفعت'):null))),
+      admin?[...field('الشهر',pr),...field('المبلغ',am),...field('العملة',cur),...field('منهم مستندات زيادة (عدد)',ex),...field('ملاحظة للعميل',nt),h('button',{class:'btn sm mt',onclick:e=>run(e.currentTarget,async()=>{await api('bill_create',{client_id:cid,period:pr.value,amount:am.value,currency:cur.value,extra_docs:ex.value,note:nt.value});toast('الفاتورة نزلت للعميل');refresh()})},'نزّل الفاتورة للعميل')]:null))}
+  box.append(det('المستندات ('+docs.docs.length+')',docs.docs.filter(d=>!d.kind.startsWith('kyc_')).map(d=>h('div',{class:'item'},h('div',{class:'row sp'},h('span',null,KIND[d.kind],' · ',dt(d.created_at)),h('span',{class:'pill '+(d.status==='posted'?'ok':d.status==='returned'?'bad':'')},DSTAT[d.status])),d.note?h('div',{class:'sm'},d.note):null,h('div',{class:'row wrap mt'},d.file_paths.map((x,n)=>h('button',{class:'btn ghost sm',onclick:()=>openFile(cid,x)},d.file_paths.length>1?['صفحة ',num(n+1)]:'افتح')))))));
+  box.append(det('الأسئلة ('+qs.questions.length+')',qs.questions.map(q=>h('div',{class:'item'},h('div',{class:'row sp'},h('b',null,q.title),h('span',{class:'pill'},q.status==='open'?'مستني العميل':q.status==='answered'?'العميل ردّ':'مقفول')),q.body?h('div',{class:'sm muted'},q.body):null,q.answer?h('div',{class:'note',style:'white-space:pre-wrap'},q.answer):null,q.answer_path?h('button',{class:'btn ghost sm mt',onclick:()=>openFile(cid,q.answer_path)},'المرفق'):null))));
+  box.append(det('الطلبات ('+rq.requests.length+')',rq.requests.map(r=>h('div',{class:'item row sp'},h('span',null,RTYPE[r.type],r.payload.party?' · '+r.payload.party:'',' · ',dt(r.created_at)),h('span',{class:'pill'},RSTAT[r.status])))));
+  main.replaceChildren(...k)}
+
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();S.installEvt=e});
+if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+render();
+})();
+</script>
+</body>
+</html>
