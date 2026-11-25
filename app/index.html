@@ -114,11 +114,12 @@ table.kv{width:100%;border-collapse:collapse;font-size:14px} table.kv td{padding
 <script>
 (function(){'use strict';
 const API='https://vuqydfqlfnzfwsosbrmo.supabase.co/functions/v1/bk-app';
+const TAPI='https://vuqydfqlfnzfwsosbrmo.supabase.co/functions/v1/bk-team';
 const WA='201281730999';
 const LOGO='<svg xmlns="http://www.w3.org/2000/svg" viewBox="-6 -60 232 226"><path d="M0 0 H62 C90 0 104 16 104 40 C104 56 97 68 86 75 C100 82 108 96 108 114 C108 142 90 160 60 160 H0 Z M30 28 H58 C68 28 74 34 74 43 C74 52 68 58 58 58 H30 Z M30 88 H60 C72 88 78 96 78 110 C78 124 72 132 60 132 H30 Z" fill="#fff" fill-rule="evenodd"/><path d="M104 0 H134 V62 L178 0 H216 L162 76 L220 160 H182 L144 104 L134 118 V160 H104 Z" fill="#00C7D6"/><path d="M120 -8 C144 -20 168 -36 184 -56 L202 -38 C182 -20 150 -8 120 -8 Z" fill="#00C7D6"/></svg>';
 const IC={home:'<path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/>',docs:'<path d="M7 3h8l4 4v14H7z"/><path d="M15 3v4h4M10 12h6M10 16h6"/>',q:'<path d="M4 5h16v11H9l-5 4z"/><path d="M10 9.5a2 2 0 113 1.7c-.6.4-1 .8-1 1.3M12 14.2v.1"/>',req:'<path d="M5 4h14v16H5z"/><path d="M9 9h6M9 13h6M12 4v-1"/>',me:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>',rev:'<path d="M4 6h16M4 12h10M4 18h7"/><path d="M15 17l2 2 4-5"/>',cl:'<path d="M3 21V8l6-4v17M9 21V10h12v11M13 14h4M13 17h4"/>'};
 const KIND={purchase:'فاتورة مشتريات',sale:'فاتورة مبيعات',expense:'مصروف / إيصال',bank:'كشف بنك',other:'مستند تاني',kyc_cr:'السجل التجاري',kyc_tax:'البطاقة الضريبية',kyc_id:'بطاقة صاحب الشركة'};
-const DSTAT={received:'اتستلم',reviewed:'المحاسب راجعه',posted:'اتسجل',returned:'رجع لك'};
+const DSTAT={received:'اتستلم',reviewed:'المحاسب راجعه',posted:'اتسجل ومستني اعتمادك',approved:'اتعتمد',returned:'رجع لك'};
 const PLAN={start:'بداية',growth:'نمو',company:'شركة',sa:'السعودية',office:'مكتب محاسبة'};
 const CSTAT={onboarding:'بيكمّل التسجيل',pending_review:'مستني التفعيل',active:'شغال',paused:'موقوف'};
 const RTYPE={invoice:'فاتورة لعميل',quote:'عرض سعر',po:'أمر شراء',so:'أمر بيع',copy:'نسخة من مستند',other:'طلب تاني'};
@@ -145,8 +146,9 @@ const dt=(s)=>s?new Date(s).toLocaleDateString('ar-EG-u-nu-latn',{day:'numeric',
 const dtt=(s)=>s?new Date(s).toLocaleString('ar-EG-u-nu-latn',{day:'numeric',month:'short',hour:'numeric',minute:'2-digit'}):'';
 const perName=(p)=>{const [y,m]=p.split('-');return new Date(y,m-1,1).toLocaleDateString('ar-EG-u-nu-latn',{month:'long',year:'numeric'})};
 function toast(msg,bad){document.querySelectorAll('.toast').forEach(t=>t.remove());const t=h('div',{class:'toast'+(bad?' bad':''),role:'status'},msg);document.body.append(t);setTimeout(()=>t.remove(),bad?5000:2600)}
-async function api(action,data){
-  let r;try{r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action,token:S.token,...(data||{})})})}
+async function tapi(action,data){return api(action,data,TAPI)}
+async function api(action,data,url){
+  let r;try{r=await fetch(url||API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action,token:S.token,...(data||{})})})}
   catch(e){throw new Error('مفيش اتصال بالإنترنت، جرّب تاني')}
   let j;try{j=await r.json()}catch(e){throw new Error('حصل خطأ، جرّب تاني')}
   if(!j.ok){if(j.code==='auth'){S.token=null;store('bk_token',null);S.user=null;render()}const er=new Error(j.error||'حصل خطأ');er.code=j.code;throw er}
@@ -356,16 +358,32 @@ function clientApp(c,seq){
           lim?h('div',{class:'meter'+(over?' over':''),role:'progressbar','aria-valuenow':r.used,'aria-valuemin':0,'aria-valuemax':lim},h('b',{style:'width:'+Math.min(100,Math.round(r.used/lim*100))+'%'})):h('div',{class:'sm muted'},'باقتك بعرض سعر خاص'),
           lim?h('div',{class:'sm '+(over?'':'muted')},over?['عدّيت الحد بـ ',num(r.used-lim),' مستند',cl.market==='eg'?[' × ',num(50),' ج = ',money((r.used-lim)*50)]:'','. من الشهر الجاي هتتنقل للباقة الأعلى.']:['فاضل ',num(lim-r.used),' مستند في باقتك الشهر ده. كشف البنك مش محسوب.']):null));
         if(!paused)k.push(h('button',{class:'btn tq big block',style:'margin-bottom:12px',onclick:()=>docSheet(c,()=>{S.data={};render()})},'ارفع مستند'));
+        try{const rv=await tapi('review_list',{client_id:c.id});const w=rv.docs.filter(x=>x.status==='posted').length;if(w&&fresh())k.push(h('div',{class:'card',style:'cursor:pointer',onclick:()=>{S.tab='docs';S.docMode='review';render()}},h('div',{class:'row sp'},h('div',null,h('b',null,'مستني اعتمادك'),h('div',{class:'sm muted'},num(w),' مستند اتسجل')),h('span',{class:'btn sm tq'},'راجع'))))}catch(e){}
         if(r.open_questions)k.push(h('div',{class:'card',style:'cursor:pointer',onclick:()=>{S.tab='questions';render()}},h('div',{class:'row sp'},h('div',null,h('b',null,'المحاسب مستني ردّك'),h('div',{class:'sm muted'},num(r.open_questions),' سؤال مفتوح')),h('span',{class:'btn sm'},'ردّ'))));
         const s=cl.snapshot;
         k.push(h('div',{class:'card'},h('h3',null,'أرقامك'),s&&(s.bank!=null||s.receivable!=null||s.payable!=null)?[h('div',{class:'kpis'},h('div',{class:'kpi'},h('b',null,s.bank==null?'—':num(fmt(s.bank))),h('span',null,'رصيد البنك')),h('div',{class:'kpi'},h('b',null,s.receivable==null?'—':num(fmt(s.receivable))),h('span',null,'ليك عند عملائك')),h('div',{class:'kpi'},h('b',null,s.payable==null?'—':num(fmt(s.payable))),h('span',null,'عليك لموردينك'))),h('div',{class:'sm muted mt'},'بالـ',({EGP:'جنيه',SAR:'ريال',USD:'دولار'})[s.currency]||s.currency,s.as_of?[' · لحد ',dt(s.as_of)]:'')]:h('p',{class:'muted mb0'},'رصيد البنك واللي ليك واللي عليك هيظهروا هنا بعد ما المحاسب يقفل أول فترة.')));
         if(r.recent.length)k.push(h('div',{class:'card'},h('h3',null,'آخر المستندات'),r.recent.map(x=>docRow(x))))}
       k.push(installCard());
       main.replaceChildren(...k.filter(Boolean));$app.lastChild.replaceWith(bar())},
-    async docs(){const per=S.docPer||'';const r=await load('docs','docs_list',{period:per});if(!fresh())return;
+    async docs(){
+      const seg=h('div',{class:'chips',style:'margin-bottom:10px'},[['all','كل المستندات'],['review','مستني اعتمادك']].map(([k,t])=>h('button',{class:'chip'+((S.docMode||'all')===k?' on':''),'aria-pressed':(S.docMode||'all')===k?'true':'false',onclick:()=>{S.docMode=k;render()}},t)));
+      if(S.docMode==='review'){const r=await tapi('review_list',{client_id:c.id});if(!fresh())return;
+        const wait=r.docs.filter(x=>x.status==='posted'),done=r.docs.filter(x=>x.status==='approved');
+        const k=[seg,h('div',{class:'card'},h('h3',null,'راجع واعتمد'),h('p',{class:'sm muted mb0'},'ده اللي المحاسب الذكي سجّله على برنامجك. افتح المستند، وراجع اللي اتسجل، واعتمده أو رجّعه بملاحظة.'))];
+        if(wait.length&&r.can_review){const all=h('button',{class:'btn tq block',style:'margin-bottom:12px'},'اعتمد الكل (',num(wait.length),')');
+          all.onclick=()=>run(all,async()=>{if(!confirm('تعتمد '+wait.length+' مستند مرة واحدة؟'))return;const x=await tapi('approve_all',{client_id:c.id,ids:wait.map(d=>d.id)});toast('اتعتمد '+x.n+' مستند');render()});k.push(all)}
+        k.push(h('div',{class:'card'},wait.length?wait.map(x=>h('div',{class:'item'},h('div',{class:'row sp'},h('b',null,KIND[x.kind]||x.kind,' #',num(x.id)),h('span',{class:'pill warn'},'مستني اعتمادك')),
+            x.ai_summary?h('div',{class:'note',style:'white-space:pre-wrap'},x.ai_summary):h('div',{class:'sm muted'},'اتسجل على البرنامج'),x.note?h('div',{class:'sm'},'ملاحظتك: ',x.note):null,
+            h('div',{class:'row wrap mt'},(x.file_paths||[]).map((p,n)=>h('button',{class:'btn ghost sm',onclick:()=>openFile(c.id,p)},x.file_paths.length>1?['صفحة ',num(n+1)]:'افتح المستند')),
+              r.can_review?h('button',{class:'btn tq sm',onclick:(e)=>run(e.currentTarget,async()=>{await tapi('doc_approve',{client_id:c.id,id:x.id});toast('اتعتمد');render()})},'اعتمد'):null,
+              r.can_review?h('button',{class:'btn bad sm',onclick:(e)=>{const n=prompt('إيه اللي محتاج يتعدّل؟');if(n)run(e.currentTarget,async()=>{await tapi('doc_approve',{client_id:c.id,id:x.id,decision:'return',note:n});toast('اترجع للمحاسب');render()})}},'رجّعه'):null),
+            h('div',{class:'sm muted mt'},dtt(x.created_at)))):h('div',{class:'empty'},'مفيش حاجة مستنية اعتمادك دلوقتي.')));
+        if(done.length)k.push(h('div',{class:'card'},h('h3',null,'اتعتمد'),done.slice(0,30).map(x=>h('div',{class:'item row sp'},h('div',null,h('b',null,KIND[x.kind]||x.kind,' #',num(x.id)),x.ai_summary?h('div',{class:'sm muted'},x.ai_summary.slice(0,90)):null),h('span',{class:'sm muted'},dt(x.approved_at))))));
+        main.replaceChildren(...k);return}
+      const per=S.docPer||'';const r=await load('docs','docs_list',{period:per});if(!fresh())return;
       const months=[['','كل الشهور']];const now=new Date();for(let i=0;i<6;i++){const x=new Date(now.getFullYear(),now.getMonth()-i,1);const p=x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0');months.push([p,perName(p)])}
       const s=sel(months,per,{'aria-label':'الشهر'});s.onchange=()=>{S.docPer=s.value;render()};
-      main.replaceChildren(...[c.status==='active'?h('button',{class:'btn tq big block',style:'margin-bottom:12px',onclick:()=>docSheet(c,()=>{S.data={};render()})},'ارفع مستند'):null,s,
+      main.replaceChildren(...[seg,c.status==='active'?h('button',{class:'btn tq big block',style:'margin-bottom:12px',onclick:()=>docSheet(c,()=>{S.data={};render()})},'ارفع مستند'):null,s,
         h('div',{class:'card mt'},r.docs.length?r.docs.map(x=>docRow(x,true)):h('div',{class:'empty'},'لسه مفيش مستندات هنا.'))].filter(Boolean))},
     async questions(){const r=await load('qs','questions_list');if(!fresh())return;
       const open=r.questions.filter(x=>x.status==='open'),rest=r.questions.filter(x=>x.status!=='open');
@@ -389,15 +407,28 @@ function clientApp(c,seq){
           return h('div',{class:'item'},h('div',{class:'row sp'},h('b',null,perName(x.period)),h('span',{class:'pill '+(x.status==='paid'?'ok':x.status==='proof_sent'?'':'warn')},x.status==='paid'?'مدفوع':x.status==='proof_sent'?'الإثبات بيتراجع':'مستني السداد')),h('div',null,money(x.amount,x.currency),x.extra_docs?[' · منهم ',num(x.extra_docs),' مستند زيادة']:''),x.note?h('div',{class:'note',style:'white-space:pre-wrap'},x.note):null,x.status!=='paid'?h('div',{class:'mt'},fi,ub):null)})):h('p',{class:'sm muted mb0 mt'},'لسه مفيش فواتير اشتراك.')));
       k.push(h('div',{class:'card'},h('h3',null,'التقارير'),rep.reports.length?rep.reports.map(x=>h('div',{class:'item row sp'},h('div',null,h('b',null,x.title),h('div',{class:'sm muted'},perName(x.period))),h('button',{class:'btn sm',onclick:()=>openFile(c.id,x.file_path)},'نزّل'))):h('p',{class:'muted mb0'},'التقرير الشهري ونسخة الإكسيل هينزلوا هنا بعد كل إقفال.')));
       k.push(h('div',{class:'card'},h('h3',null,'بيانات الشركة'),h('table',{class:'kv'},FORM.map(([key,label])=>cl.form[key]?h('tr',null,h('td',null,label),h('td',null,cl.form[key])):null),cl.terms_accepted_at?h('tr',null,h('td',null,'الموافقة على الشروط'),h('td',null,dtt(cl.terms_accepted_at),' · ',cl.signer_name)):null),h('p',{class:'sm muted mb0 mt'},'عايز تعدّل حاجة؟ كلّمنا على الواتساب.')));
+      k.push(await teamCard(c));
       k.push(installCard(true));
       k.push(h('div',{class:'card'},h('a',{class:'btn ghost block',href:'https://wa.me/'+WA,target:'_blank',rel:'noopener'},'كلّمنا على الواتساب'),h('a',{class:'btn ghost block mt',href:'/terms.html',target:'_blank',rel:'noopener'},'شروط الخدمة'),h('button',{class:'btn bad block mt',onclick:logout},'تسجيل خروج')));
       main.replaceChildren(...k.filter(Boolean))}};
-  function docRow(x,full){const st=x.status,i=['received','reviewed','posted'].indexOf(st);
-    return h('div',{class:'item'},h('div',{class:'row sp'},h('b',null,KIND[x.kind]||x.kind),h('span',{class:'pill '+(st==='posted'?'ok':st==='returned'?'bad':'')},DSTAT[st])),
+  function docRow(x,full){const st=x.status,i=st==='approved'?2:['received','reviewed','posted'].indexOf(st);
+    return h('div',{class:'item'},h('div',{class:'row sp'},h('b',null,KIND[x.kind]||x.kind),h('span',{class:'pill '+(st==='approved'?'ok':st==='posted'?'warn':st==='returned'?'bad':'')},DSTAT[st])),
       x.note?h('div',{class:'sm'},x.note):null,
       st==='returned'?h('div',{class:'note bad'},x.staff_note||'محتاج يتبعت تاني'):h('div',{class:'track','aria-hidden':'true'},[0,1,2].map(n=>h('i',{class:n<=i?'on':''}))),
       h('div',{class:'row sp mt'},h('span',{class:'sm muted'},dtt(x.created_at),full&&!x.counted?' · مش محسوب في الباقة':''),full&&x.file_paths?h('div',{class:'row'},x.voice_path?h('button',{class:'btn ghost sm',onclick:()=>openFile(c.id,x.voice_path)},'الفويس'):null,x.file_paths.map((p,n)=>h('button',{class:'btn ghost sm',onclick:()=>openFile(c.id,p)},x.file_paths.length>1?['صفحة ',num(n+1)]:'افتح'))):null))}
   V[S.tab]().catch(fail)}
+async function teamCard(c){
+  let r;try{r=await tapi('members_list',{client_id:c.id})}catch(e){return null}
+  const ROLE={client:'صاحب الحساب',office:'صاحب المكتب',reviewer:'محاسب (مراجعة واعتماد)'};
+  const list=r.members.map(m=>h('div',{class:'item row sp'},h('div',null,h('b',null,m.name,m.me?' (إنت)':''),h('div',{class:'sm muted'},ROLE[m.role]||m.role,' · ',h('span',{dir:'ltr'},m.phone),m.activated?'':' · لسه ما دخلش')),
+    r.can_manage&&m.role==='reviewer'?h('button',{class:'btn ghost sm',onclick:(e)=>{if(confirm('تشيل '+m.name+' من الشركة؟'))run(e.currentTarget,async()=>{await tapi('member_remove',{client_id:c.id,user_id:m.id});toast('اتشال');render()})}},'شيل'):null));
+  const card=h('div',{class:'card'},h('h3',null,'فريقك'),h('p',{class:'sm muted'},'ضيف محاسبك أو اللي بيتابع الحسابات عندك عشان يراجع اللي المحاسب الذكي سجّله ويعتمده من موبايله.'),list);
+  if(r.can_manage){const nm=inp({placeholder:'اسم المحاسب','aria-label':'اسم المحاسب'}),ph=inp({type:'tel',placeholder:'رقم موبايله',dir:'ltr','aria-label':'رقم الموبايل'});const b=h('button',{class:'btn block mt'},'ضيف للفريق');
+    b.onclick=()=>run(b,async()=>{const x=await tapi('member_add',{client_id:c.id,name:nm.value,phone:ph.value});
+      if(x.code)modal((sh)=>{sh.append(h('h3',null,'اتضاف'),h('p',null,'ابعت له الكود ده. هيفتح التطبيق ويختار «أول دخول للفريق» ويكتب رقمه والكود ويعمل رقم سري.'),h('div',{class:'big-n',style:'text-align:center;letter-spacing:4px'},num(x.code)),h('a',{class:'btn block mt',target:'_blank',rel:'noopener',href:'https://wa.me/'+(p=>p.startsWith('05')?'966'+p.slice(1):p.startsWith('0')?'20'+p.slice(1):p)(ph.value.replace(/\D/g,''))+'?text='+encodeURIComponent('اتضفت على باشكاتب عشان تراجع وتعتمد الحسابات. افتح '+location.origin+'/app واختار «أول دخول للفريق» واكتب رقمك وكود التفعيل: '+x.code)},'ابعته على الواتساب'))});
+      else toast('اتضاف للفريق');render()});
+    card.append(h('div',{class:'mt'},nm,h('div',{class:'mt'},ph),b))}
+  return card}
 function installCard(always){
   const standalone=window.matchMedia('(display-mode: standalone)').matches||navigator.standalone;if(standalone)return null;
   const ios=/iphone|ipad|ipod/i.test(navigator.userAgent);
@@ -478,7 +509,7 @@ function staffDoc(d,name,refresh,o){
   return h('div',{class:'card'},h('div',{class:'row sp'},h('b',null,name),ks),d.note?h('div',{class:'note'},d.note):null,
     h('div',{class:'row wrap mt'},d.file_paths.map((p,n)=>h('button',{class:'btn ghost sm',onclick:()=>openFile(d.client_id,p)},d.file_paths.length>1?['صفحة ',num(n+1)]:'افتح المستند')),d.voice_path?h('button',{class:'btn ghost sm',onclick:()=>openFile(d.client_id,d.voice_path)},'الفويس'):null),
     h('div',{class:'sm muted mt'},dtt(d.created_at),' · ',DSTAT[d.status]),
-    h('div',{class:'row wrap mt'},d.status==='received'?h('button',{class:'btn sm',onclick:act('reviewed')},'راجعته'):null,h('button',{class:'btn tq sm',onclick:act('posted')},'اتسجل'),
+    h('div',{class:'row wrap mt'},d.status==='received'?h('button',{class:'btn sm',onclick:act('reviewed')},'راجعته'):null,h('button',{class:'btn tq sm',onclick:(e)=>{const sm=prompt('اكتب للعميل إيه اللي اتسجل (اختياري): المورد/العميل، المبلغ، الحساب',d.ai_summary||'');const btn=e.currentTarget;run(btn,async()=>{await api('doc_review',{id:d.id,status:'posted',kind:ks.value});if(sm)await tapi('ai_summary_set',{id:d.id,ai_summary:sm});refresh()})}},'اتسجل'),
       h('button',{class:'btn bad sm',onclick:(e)=>{const n=prompt('سبب الإرجاع (هيظهر للعميل)');if(n)act('returned',{staff_note:n})(e)}},'رجّعه للعميل'),
       h('button',{class:'btn ghost sm',onclick:()=>askSheet(d.client_id,d.id,refresh)},'اسأل العميل')))}
 function staffReq(r,name,refresh){const p=r.payload;
